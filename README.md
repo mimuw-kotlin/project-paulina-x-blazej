@@ -1,25 +1,26 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/M0kyOMLZ)
-# Frobnicator (this is a template)
+# JuweAppka
 
-## Authors
-- Andrzej Głuszak (@agluszak on GitHub)
-- Linus Torvalds (@torvalds on GitHub)
+## Autorzy
+- Błażej Wilkoławski (@Buarzej on GitHub)
+- Paulina Kubera (@c00kiepreferences on GitHub)
 
-## Description
-Frobnicator is going to be a platformer game similar to Super Mario Bros made using Korge game engine.
+## Opis
+JuweAppka to aplikacja mobilna przeznaczona na systemy Android i iOS będąca aplikacją festiwalu muzycznego "Juwenalia UW".
 
-## Features
-- map generator
-- shooting
-- enemy AI
-- game state saving and loading
-- scores
+## Funkcje
+- harmonogram koncertów i innych wydarzeń towarzyszących w dniach festiwalu
+- lista aktualnie ogłoszonych artystów oraz możliwość odsłuchania ich najpopularniejszych utworów bezpośrednio w aplikacji
+- funkcja kupna biletów (w serwisie zewnętrznym) i możliwość wgrania ich do aplikacji w postaci pliku PDF
+- interaktywna mapa terenu festiwalowego
+- obsługa powiadomień push z najnowszymi ogłoszeniami
 
 ## Plan
-In the first part we're going to implement the basics: movement, physics and shooting. The enemies will simply bounce from one edge of the platform to the other. There will be only a single map.
+W pierwszej części zamierzamy zaprojektować i zaimplementować pełny UI aplikacji (wspólny dla obu systemów, Androida i iOS-a). Znacząca większość funkcjonalności nie będzie jeszcze działać, a zawartość UI będzie bazowała na tymczasowych placeholderach imitujących prawdziwe treści.
 
-In the second part we're going to add random map generator, saving/loading, scores and a more sophisticated AI.
+W drugiej części zamierzamy zaimplementować wszystkie wymienione powyżej funkcjonalności.
 
 ## Libraries
-- Korge (https://korge.org/)
-- kotlinx-serialization (https://github.com/Kotlin/kotlinx.serialization)
+- Kotlin Multiplatform (https://kotlinlang.org/docs/multiplatform.html)
+- Compose Multiplatform (https://www.jetbrains.com/compose-multiplatform/)
+- Firebase Kotlin SDK (https://github.com/GitLiveApp/firebase-kotlin-sdk)
