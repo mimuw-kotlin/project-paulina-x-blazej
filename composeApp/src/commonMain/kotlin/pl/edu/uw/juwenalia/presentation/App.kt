@@ -1,54 +1,58 @@
 package pl.edu.uw.juwenalia.presentation
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
-
-import juweappka.composeapp.generated.resources.Res
-import juweappka.composeapp.generated.resources.compose_multiplatform
-import pl.edu.uw.juwenalia.Greeting
-
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-
+import androidx.compose.material.Icon
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import pl.edu.uw.juwenalia.presentation.theme.AppTheme
+
+import pl.edu.uw.juwenalia.presentation.home.HomeScreen
+import pl.edu.uw.juwenalia.presentation.map.MapScreen
+import pl.edu.uw.juwenalia.presentation.artists.ArtistsScreen
+import pl.edu.uw.juwenalia.presentation.tickets.TicketsScreen
+
+sealed class NavItem(val route: String, val icon: androidx.compose.ui.graphics.vector.ImageVector, val label: String) {
+    object Home : NavItem("home", Icons.Default.Home, "Główna")
+    object Artists : NavItem("artists", Icons.Default.Person, "Artyści")
+    object Map : NavItem("map", Icons.Default.Place, "Mapa")
+    object Tickets : NavItem("tickets", Icons.Default.ShoppingCart, "Bilety")
+}
 
 @Composable
 @Preview
 fun App() {
 
     AppTheme (
-        darkTheme = true
+        darkTheme = false
         //TODO: pobieraj automatycznie kolor z systemu
     ) {
+        val navItems = listOf(NavItem.Home, NavItem.Artists, NavItem.Map, NavItem.Tickets)
+        var selectedRoute by remember { mutableStateOf(NavItem.Home.route) }
+
         Scaffold (
-            modifier = Modifier.fillMaxSize()
-        ) {
-            var showContent by remember { mutableStateOf(false) }
-            Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                Button(onClick = { showContent = !showContent }) {
-                    Text("Click me!")
-                }
-                AnimatedVisibility(showContent) {
-                    val greeting = remember { Greeting().greet() }
-                    Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                        Image(painterResource(Res.drawable.compose_multiplatform), null)
-                        Text("Compose: $greeting")
+            modifier = Modifier.fillMaxSize(),
+            bottomBar = {
+                NavigationBar {
+                    navItems.forEach { item ->
+                        NavigationBarItem(
+                            selected = selectedRoute == item.route,
+                            onClick = { selectedRoute = item.route },
+                            icon = { Icon(item.icon, contentDescription = item.label) },
+                            label = { Text(item.label) }
+                        )
                     }
                 }
+            }
+        ) {
+            when (selectedRoute) {
+                NavItem.Home.route -> HomeScreen()
+                NavItem.Map.route -> MapScreen()
+                NavItem.Artists.route -> ArtistsScreen()
+                NavItem.Tickets.route -> TicketsScreen()
             }
         }
     }
