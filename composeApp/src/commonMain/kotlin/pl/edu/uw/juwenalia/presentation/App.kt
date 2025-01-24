@@ -15,7 +15,11 @@ import pl.edu.uw.juwenalia.presentation.map.MapScreen
 import pl.edu.uw.juwenalia.presentation.artists.ArtistsScreen
 import pl.edu.uw.juwenalia.presentation.tickets.TicketsScreen
 
-sealed class NavItem(val route: String, val icon: androidx.compose.ui.graphics.vector.ImageVector, val label: String) {
+sealed class NavItem(
+    val route: String,
+    val icon: androidx.compose.ui.graphics.vector.ImageVector,
+    val label: String
+) {
     object Home : NavItem("home", Icons.Default.Home, "Główna")
     object Artists : NavItem("artists", Icons.Default.Person, "Artyści")
     object Map : NavItem("map", Icons.Default.Place, "Mapa")
@@ -24,16 +28,18 @@ sealed class NavItem(val route: String, val icon: androidx.compose.ui.graphics.v
 
 @Composable
 @Preview
-fun App() {
-
-    AppTheme (
-        darkTheme = false
-        //TODO: pobieraj automatycznie kolor z systemu
+fun App(
+    darkTheme: Boolean,
+    dynamicColor: Boolean,
+) {
+    AppTheme(
+        darkTheme = darkTheme,
+        dynamicColor = dynamicColor
     ) {
         val navItems = listOf(NavItem.Home, NavItem.Artists, NavItem.Map, NavItem.Tickets)
         var selectedRoute by remember { mutableStateOf(NavItem.Home.route) }
 
-        Scaffold (
+        Scaffold(
             modifier = Modifier.fillMaxSize(),
             bottomBar = {
                 NavigationBar {
