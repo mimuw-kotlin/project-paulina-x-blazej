@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">JuweAppka</string>
+
+    <!-- Navigation bar -->
+    <string name="home_nav">Główna</string>
+    <string name="artists_nav">Artyści</string>
+    <string name="map_nav">Mapa</string>
+    <string name="tickets_nav">Bilety</string>
+
+    <!-- Tickets screen -->
+    <string name="tickets_title">Bilety</string>
+    <string name="upload_ticket">Wgraj bilet</string>
+    <string name="your_tickets">Twoje bilety</string>
+    <string name="no_tickets">Nie masz jeszcze żadnych biletów</string>
+    <string name="no_tickets_desc">Dodaj swój bilet do aplikacji i miej go zawsze pod ręką</string>
+</resources>

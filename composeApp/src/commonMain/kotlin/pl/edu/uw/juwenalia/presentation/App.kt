@@ -1,29 +1,46 @@
 package pl.edu.uw.juwenalia.presentation
 
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.LocalActivity
+import androidx.compose.material.icons.filled.Map
+import androidx.compose.material.icons.filled.PeopleAlt
+import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.LocalActivity
+import androidx.compose.material.icons.outlined.Map
+import androidx.compose.material.icons.outlined.PeopleAlt
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.vector.ImageVector
+import juweappka.composeapp.generated.resources.Res
+import juweappka.composeapp.generated.resources.artists_nav
+import juweappka.composeapp.generated.resources.home_nav
+import juweappka.composeapp.generated.resources.map_nav
+import juweappka.composeapp.generated.resources.tickets_nav
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import pl.edu.uw.juwenalia.presentation.theme.AppTheme
-
+import pl.edu.uw.juwenalia.presentation.artists.ArtistsScreen
 import pl.edu.uw.juwenalia.presentation.home.HomeScreen
 import pl.edu.uw.juwenalia.presentation.map.MapScreen
-import pl.edu.uw.juwenalia.presentation.artists.ArtistsScreen
+import pl.edu.uw.juwenalia.presentation.theme.AppTheme
 import pl.edu.uw.juwenalia.presentation.tickets.TicketsScreen
 
-sealed class NavItem(
-    val route: String,
-    val icon: androidx.compose.ui.graphics.vector.ImageVector,
-    val label: String
+enum class AppDestinations(
+    val label: StringResource,
+    val filledIcon: ImageVector,
+    val outlinedIcon: ImageVector,
 ) {
-    object Home : NavItem("home", Icons.Default.Home, "Główna")
-    object Artists : NavItem("artists", Icons.Default.Person, "Artyści")
-    object Map : NavItem("map", Icons.Default.Place, "Mapa")
-    object Tickets : NavItem("tickets", Icons.Default.ShoppingCart, "Bilety")
+    HOME(Res.string.home_nav, Icons.Filled.Home, Icons.Outlined.Home),
+    ARTISTS(Res.string.artists_nav, Icons.Filled.PeopleAlt, Icons.Outlined.PeopleAlt),
+    MAP(Res.string.map_nav, Icons.Filled.Map, Icons.Outlined.Map),
+    TICKETS(Res.string.tickets_nav, Icons.Filled.LocalActivity, Icons.Outlined.LocalActivity),
 }
 
 @Composable
@@ -36,31 +53,31 @@ fun App(
         darkTheme = darkTheme,
         dynamicColor = dynamicColor
     ) {
-        val navItems = listOf(NavItem.Home, NavItem.Artists, NavItem.Map, NavItem.Tickets)
-        var selectedRoute by remember { mutableStateOf(NavItem.Home.route) }
+        var currentDestination by rememberSaveable { mutableStateOf(AppDestinations.HOME) }
 
-        Scaffold(
-            modifier = Modifier.fillMaxSize(),
-            bottomBar = {
-                NavigationBar {
-                    navItems.forEach { item ->
-                        NavigationBarItem(
-                            selected = selectedRoute == item.route,
-                            onClick = { selectedRoute = item.route },
-                            icon = { Icon(item.icon, contentDescription = item.label) },
-                            label = { Text(item.label) }
-                        )
-                    }
+        NavigationSuiteScaffold(
+            navigationSuiteItems = {
+                AppDestinations.entries.forEach {
+                    item(
+                        icon = {
+                            Icon(
+                                if (currentDestination == it) it.filledIcon else it.outlinedIcon,
+                                contentDescription = stringResource(it.label)
+                            )
+                        },
+                        label = { Text(stringResource(it.label)) },
+                        selected = currentDestination == it,
+                        onClick = { currentDestination = it }
+                    )
                 }
             }
         ) {
-            when (selectedRoute) {
-                NavItem.Home.route -> HomeScreen()
-                NavItem.Map.route -> MapScreen()
-                NavItem.Artists.route -> ArtistsScreen()
-                NavItem.Tickets.route -> TicketsScreen()
+            when (currentDestination) {
+                AppDestinations.HOME -> HomeScreen()
+                AppDestinations.ARTISTS -> ArtistsScreen()
+                AppDestinations.MAP -> MapScreen()
+                AppDestinations.TICKETS -> TicketsScreen()
             }
         }
     }
-
 }
