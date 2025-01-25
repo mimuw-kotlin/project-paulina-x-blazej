@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             App(
                 darkTheme = isSystemInDarkTheme(),
-                dynamicColor = true,
+                dynamicColor = false, // TODO: change to true later on.
             )
         }
     }
