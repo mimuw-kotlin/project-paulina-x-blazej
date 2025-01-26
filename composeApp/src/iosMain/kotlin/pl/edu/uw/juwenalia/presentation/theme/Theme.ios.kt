@@ -7,9 +7,12 @@ import androidx.compose.runtime.Composable
 actual fun AppTheme(
     darkTheme: Boolean,
     dynamicColor: Boolean,
-    content: @Composable() () -> Unit
+    content:
+        @Composable()
+        () -> Unit
 ) {
     MaterialTheme(
+        // TODO: maybe handle the medium and high contrast levels?
         colorScheme = if (darkTheme) darkScheme else lightScheme,
         typography = AppTypography,
         content = content
