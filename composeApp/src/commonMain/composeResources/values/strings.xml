@@ -11,6 +11,6 @@
     <string name="tickets_title">Bilety</string>
     <string name="upload_ticket">Wgraj bilet</string>
     <string name="your_tickets">Twoje bilety</string>
-    <string name="no_tickets">Nie masz jeszcze żadnych biletów</string>
-    <string name="no_tickets_desc">Dodaj swój bilet do aplikacji i miej go zawsze pod ręką</string>
+    <string name="no_tickets">Nie masz żadnych biletów</string>
+    <string name="no_tickets_desc">Dodaj swoje bilety do aplikacji i miej je zawsze pod ręką</string>
 </resources>

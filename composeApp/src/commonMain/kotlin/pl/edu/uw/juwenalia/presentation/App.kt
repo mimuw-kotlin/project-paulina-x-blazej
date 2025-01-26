@@ -25,7 +25,6 @@ import juweappka.composeapp.generated.resources.map_nav
 import juweappka.composeapp.generated.resources.tickets_nav
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import pl.edu.uw.juwenalia.presentation.artists.ArtistsScreen
 import pl.edu.uw.juwenalia.presentation.home.HomeScreen
 import pl.edu.uw.juwenalia.presentation.map.MapScreen
@@ -35,19 +34,18 @@ import pl.edu.uw.juwenalia.presentation.tickets.TicketsScreen
 enum class AppDestinations(
     val label: StringResource,
     val filledIcon: ImageVector,
-    val outlinedIcon: ImageVector,
+    val outlinedIcon: ImageVector
 ) {
     HOME(Res.string.home_nav, Icons.Filled.Home, Icons.Outlined.Home),
     ARTISTS(Res.string.artists_nav, Icons.Filled.PeopleAlt, Icons.Outlined.PeopleAlt),
     MAP(Res.string.map_nav, Icons.Filled.Map, Icons.Outlined.Map),
-    TICKETS(Res.string.tickets_nav, Icons.Filled.LocalActivity, Icons.Outlined.LocalActivity),
+    TICKETS(Res.string.tickets_nav, Icons.Filled.LocalActivity, Icons.Outlined.LocalActivity)
 }
 
 @Composable
-@Preview
-fun App(
+internal fun App(
     darkTheme: Boolean,
-    dynamicColor: Boolean,
+    dynamicColor: Boolean
 ) {
     AppTheme(
         darkTheme = darkTheme,
