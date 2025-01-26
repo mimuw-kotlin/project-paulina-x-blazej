@@ -8,8 +8,7 @@ actual fun AppTheme(
     darkTheme: Boolean,
     dynamicColor: Boolean,
     content:
-        @Composable()
-        () -> Unit
+        @Composable () -> Unit
 ) {
     MaterialTheme(
         // TODO: maybe handle the medium and high contrast levels?

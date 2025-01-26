@@ -58,8 +58,7 @@ actual fun AppTheme(
     darkTheme: Boolean,
     dynamicColor: Boolean,
     content:
-        @Composable()
-        () -> Unit
+        @Composable () -> Unit
 ) {
     val colorScheme =
         when {
