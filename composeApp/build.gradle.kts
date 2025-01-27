@@ -43,6 +43,9 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
+            implementation(libs.jetbrains.adaptive)
+            implementation(libs.jetbrains.adaptive.layout)
+            implementation(libs.jetbrains.adaptive.navigation)
         }
     }
 }
