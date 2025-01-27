@@ -19,15 +19,15 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun CardWithAction(
-    colors: CardColors = CardDefaults.cardColors(),
-    modifier: Modifier = Modifier,
     title: String,
     subtitle: String,
     bodyText: String,
-    withDivider: Boolean = true,
     buttonIcon: ImageVector,
     buttonText: String,
-    onButtonClick: () -> Unit
+    onButtonClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    withDivider: Boolean = true,
+    colors: CardColors = CardDefaults.cardColors()
 ) {
     Card(
         colors = colors,

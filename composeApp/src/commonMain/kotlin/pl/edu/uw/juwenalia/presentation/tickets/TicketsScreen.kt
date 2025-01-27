@@ -17,7 +17,6 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -35,6 +34,7 @@ import juweappka.composeapp.generated.resources.your_tickets
 import org.jetbrains.compose.resources.stringResource
 import pl.edu.uw.juwenalia.presentation.components.CardGridItem
 import pl.edu.uw.juwenalia.presentation.components.CardWithAction
+import pl.edu.uw.juwenalia.presentation.components.FeedSectionHeader
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -52,7 +52,12 @@ internal fun TicketsScreen() {
     }) { innerPadding ->
         LazyVerticalGrid(
             columns = GridCells.Adaptive(minSize = 180.dp),
-            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 120.dp),
+            contentPadding =
+                if (ticketCount == 0) {
+                    PaddingValues(horizontal = 16.dp)
+                } else {
+                    PaddingValues(start = 16.dp, end = 16.dp, bottom = 120.dp)
+                },
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier.consumeWindowInsets(innerPadding).padding(innerPadding)
@@ -86,15 +91,7 @@ internal fun TicketsScreen() {
                 }
             } else {
                 item(span = { GridItemSpan(maxLineSpan) }) {
-                    Text(
-                        text = stringResource(Res.string.your_tickets),
-                        style = MaterialTheme.typography.headlineSmall,
-                        modifier =
-                            Modifier.padding(
-                                top = 16.dp,
-                                bottom = 8.dp
-                            )
-                    )
+                    FeedSectionHeader(stringResource(Res.string.your_tickets))
                 }
 
                 items(ticketCount) {
