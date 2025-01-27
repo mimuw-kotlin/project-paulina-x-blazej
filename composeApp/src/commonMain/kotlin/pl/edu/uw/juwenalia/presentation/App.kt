@@ -1,5 +1,11 @@
 package pl.edu.uw.juwenalia.presentation
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.LocalActivity
@@ -70,11 +76,19 @@ internal fun App(
                 }
             }
         ) {
-            when (currentDestination) {
-                AppDestinations.HOME -> HomeScreen()
-                AppDestinations.ARTISTS -> ArtistsScreen()
-                AppDestinations.MAP -> MapScreen()
-                AppDestinations.TICKETS -> TicketsScreen()
+            AnimatedContent(
+                targetState = currentDestination,
+                transitionSpec = {
+                    fadeIn(tween(200, easing = FastOutSlowInEasing)) togetherWith
+                        fadeOut(tween(200, easing = FastOutSlowInEasing))
+                }
+            ) { destination ->
+                when (destination) {
+                    AppDestinations.HOME -> HomeScreen()
+                    AppDestinations.ARTISTS -> ArtistsScreen()
+                    AppDestinations.MAP -> MapScreen()
+                    AppDestinations.TICKETS -> TicketsScreen()
+                }
             }
         }
     }
