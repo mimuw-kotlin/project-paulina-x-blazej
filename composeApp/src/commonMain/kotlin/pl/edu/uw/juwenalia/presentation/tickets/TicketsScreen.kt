@@ -1,13 +1,13 @@
 package pl.edu.uw.juwenalia.presentation.tickets
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
@@ -50,64 +50,64 @@ internal fun TicketsScreen() {
             text = { Text(text = stringResource(Res.string.upload_ticket)) }
         )
     }) { innerPadding ->
-        Column(
+        LazyVerticalGrid(
+            columns = GridCells.Adaptive(minSize = 180.dp),
+            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 120.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier.consumeWindowInsets(innerPadding).padding(innerPadding)
         ) {
-            CardWithAction(
-                modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .wrapContentHeight()
-                        .padding(horizontal = 16.dp),
-                title = "1. pula biletów",
-                subtitle = "Już dostępna!",
-                bodyText =
-                    "Nie zwlekaj – liczba biletów w puli jest limitowana" +
-                        ", a ceny będą wzrastać.",
-                buttonIcon = Icons.Filled.ShoppingCart,
-                buttonText = "Kup teraz",
-                onButtonClick = { /* TODO */ }
-            )
-
-            if (ticketCount == 0) {
-                NoTicketsEmptyState(
+            item(span = { GridItemSpan(maxLineSpan) }) {
+                CardWithAction(
                     modifier =
                         Modifier
                             .fillMaxWidth()
-                            .wrapContentHeight()
-                            .padding(32.dp)
+                            .wrapContentHeight(),
+                    title = "1. pula biletów",
+                    subtitle = "Już dostępna!",
+                    bodyText =
+                        "Nie zwlekaj – liczba biletów w puli jest limitowana" +
+                            ", a ceny będą wzrastać.",
+                    buttonIcon = Icons.Filled.ShoppingCart,
+                    buttonText = "Kup teraz",
+                    onButtonClick = { /* TODO */ }
                 )
-            } else {
-                Text(
-                    text = stringResource(Res.string.your_tickets),
-                    style = MaterialTheme.typography.headlineSmall,
-                    modifier =
-                        Modifier.padding(
-                            top = 24.dp,
-                            start = 16.dp,
-                            end = 16.dp,
-                            bottom = 16.dp
-                        )
-                )
+            }
 
-                LazyVerticalGrid(
-                    columns = GridCells.Adaptive(minSize = 180.dp),
-                    contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 120.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    items(ticketCount) {
-                        CardGridItem(
-                            title = "Bilet dwudniowy $it",
-                            subtitle = "Imię nazwisko",
-                            image = Res.drawable.ticket_image_placeholder,
-                            imageContentDescription = "Tickets",
-                            buttonIcon = Icons.Filled.Delete,
-                            buttonIconContentDescription = "Usuń",
-                            onCardClick = { /* TODO */ },
-                            onButtonClick = { ticketCount-- }
-                        )
-                    }
+            if (ticketCount == 0) {
+                item(span = { GridItemSpan(maxLineSpan) }) {
+                    NoTicketsEmptyState(
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .wrapContentHeight()
+                                .padding(16.dp)
+                    )
+                }
+            } else {
+                item(span = { GridItemSpan(maxLineSpan) }) {
+                    Text(
+                        text = stringResource(Res.string.your_tickets),
+                        style = MaterialTheme.typography.headlineSmall,
+                        modifier =
+                            Modifier.padding(
+                                top = 16.dp,
+                                bottom = 8.dp
+                            )
+                    )
+                }
+
+                items(ticketCount) {
+                    CardGridItem(
+                        title = "Bilet dwudniowy $it",
+                        subtitle = "Imię nazwisko",
+                        image = Res.drawable.ticket_image_placeholder,
+                        imageContentDescription = "Tickets",
+                        buttonIcon = Icons.Filled.Delete,
+                        buttonIconContentDescription = "Usuń",
+                        onCardClick = { /* TODO */ },
+                        onButtonClick = { ticketCount-- }
+                    )
                 }
             }
         }

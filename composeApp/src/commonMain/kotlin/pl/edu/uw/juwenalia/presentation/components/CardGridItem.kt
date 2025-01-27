@@ -25,9 +25,6 @@ import org.jetbrains.compose.resources.imageResource
 
 @Composable
 fun CardGridItem(
-    modifier: Modifier = Modifier
-        .fillMaxWidth()
-        .wrapContentHeight(),
     title: String,
     subtitle: String,
     image: DrawableResource,
@@ -36,10 +33,14 @@ fun CardGridItem(
     buttonIconContentDescription: String,
     onCardClick: () -> Unit,
     onButtonClick: () -> Unit,
+    modifier: Modifier =
+        Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
 ) {
     OutlinedCard(
         modifier = modifier.clickable(onClick = onCardClick),
-        shape = RoundedCornerShape(12.dp),
+        shape = RoundedCornerShape(12.dp)
     ) {
         Box {
             Column {
@@ -47,25 +48,26 @@ fun CardGridItem(
                     bitmap = imageResource(image),
                     contentDescription = imageContentDescription,
                     modifier = Modifier.fillMaxWidth().clip(shape = RoundedCornerShape(12.dp)),
-                    contentScale = ContentScale.FillWidth,
+                    contentScale = ContentScale.FillWidth
                 )
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text(
                         text = title,
-                        style = MaterialTheme.typography.titleMedium,
+                        style = MaterialTheme.typography.titleMedium
                     )
                     Text(
                         text = subtitle,
-                        style = MaterialTheme.typography.bodyMedium,
+                        style = MaterialTheme.typography.bodyMedium
                     )
                 }
             }
             FilledIconButton(
-                onClick = onButtonClick, modifier = Modifier.align(Alignment.TopEnd).padding(8.dp)
+                onClick = onButtonClick,
+                modifier = Modifier.align(Alignment.TopEnd).padding(8.dp)
             ) {
                 Icon(
                     imageVector = buttonIcon,
-                    contentDescription = buttonIconContentDescription,
+                    contentDescription = buttonIconContentDescription
                 )
             }
         }
