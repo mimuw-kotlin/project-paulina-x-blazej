@@ -33,7 +33,8 @@ kotlin {
             implementation(libs.androidx.activity.compose)
         }
         commonMain.dependencies {
-            implementation("com.darkrockstudios:mpfilepicker:3.1.0")
+            implementation("io.github.vinceglb:filekit-core:0.8.8")
+            implementation("io.github.vinceglb:filekit-compose:0.8.8")
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)

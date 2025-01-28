@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.ShoppingCart
@@ -30,8 +31,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
-import com.darkrockstudios.libraries.mpfilepicker.FilePicker
-import com.darkrockstudios.libraries.mpfilepicker.MPFile
+import io.github.vinceglb.filekit.compose.rememberFilePickerLauncher
+import io.github.vinceglb.filekit.core.PickerType
+import io.github.vinceglb.filekit.core.PlatformDirectory
+import io.github.vinceglb.filekit.core.PlatformFile
+import io.github.vinceglb.filekit.core.baseName
 import juweappka.composeapp.generated.resources.Res
 import juweappka.composeapp.generated.resources.ticket_image_placeholder
 import juweappka.composeapp.generated.resources.tickets_title
@@ -45,23 +49,25 @@ import pl.edu.uw.juwenalia.presentation.components.CardWithAction
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun TicketsScreen() {
-    var ticketCount by rememberSaveable { mutableIntStateOf(0) }
     val uriHandler = LocalUriHandler.current
     var showFilePicker by remember { mutableStateOf(false) }
 
-    val fileType = listOf("pdf")
-    FilePicker(show = showFilePicker, fileExtensions = fileType) { platformFile ->
-        showFilePicker = false
-    }
+    var files: Set<PlatformFile> by remember { mutableStateOf(emptySet()) }
+    var directory: PlatformDirectory? by remember { mutableStateOf(null) }
+
+    val context = getContext()
+
+    val ticketFilePicker = rememberFilePickerLauncher(
+        type = PickerType.File(listOf("pdf")),
+        initialDirectory = directory?.path,
+        onResult = { file -> file?.let { files += it } }
+    )
 
     Scaffold(topBar = {
         CenterAlignedTopAppBar(title = { Text(text = stringResource(Res.string.tickets_title)) })
     }, floatingActionButton = {
         ExtendedFloatingActionButton(
-            onClick = {
-                ticketCount++
-                showFilePicker = true
-                },
+            onClick = { ticketFilePicker.launch() },
             icon = { Icon(Icons.Filled.Upload, stringResource(Res.string.upload_ticket)) },
             text = { Text(text = stringResource(Res.string.upload_ticket)) }
         )
@@ -69,7 +75,7 @@ internal fun TicketsScreen() {
         LazyVerticalGrid(
             columns = GridCells.Adaptive(minSize = 180.dp),
             contentPadding =
-                if (ticketCount == 0) {
+                if (files.isEmpty()) {
                     PaddingValues(horizontal = 16.dp)
                 } else {
                     PaddingValues(start = 16.dp, end = 16.dp, bottom = 120.dp)
@@ -84,7 +90,7 @@ internal fun TicketsScreen() {
                         Modifier
                             .fillMaxWidth()
                             .wrapContentHeight(),
-                    title = "1. pula biletów",
+                    title = "Pierwsza pula biletów",
                     subtitle = "Już dostępna!",
                     bodyText =
                         "Nie zwlekaj – liczba biletów w puli jest limitowana" +
@@ -97,7 +103,7 @@ internal fun TicketsScreen() {
                 )
             }
 
-            if (ticketCount == 0) {
+            if (files.isEmpty()) {
                 item(span = { GridItemSpan(maxLineSpan) }) {
                     NoTicketsEmptyState(
                         modifier =
@@ -116,16 +122,26 @@ internal fun TicketsScreen() {
                     )
                 }
 
-                items(ticketCount) {
+                items(files.toList()) {
+
+                    val fileName: String = it.name
+                    val filePath: String? = it.path
+
                     CardGridItem(
-                        title = "Bilet dwudniowy $it",
-                        subtitle = "Imię nazwisko",
+                        title = "Bilet",
+                        subtitle = "$fileName",
                         image = Res.drawable.ticket_image_placeholder,
                         imageContentDescription = "Tickets",
                         buttonIcon = Icons.Filled.Delete,
                         buttonIconContentDescription = "Usuń",
-                        onCardClick = { /* TODO */ },
-                        onButtonClick = { ticketCount-- }
+                        onCardClick = {
+                            if (filePath != null) {
+                                openFile(filePath, context)
+                            }
+                        },
+                        onButtonClick = {
+                            files = files.filterNot { it.path == filePath }.toSet()
+                        }
                     )
                 }
             }
