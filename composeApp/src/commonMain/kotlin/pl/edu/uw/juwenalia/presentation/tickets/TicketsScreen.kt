@@ -23,10 +23,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
+import com.darkrockstudios.libraries.mpfilepicker.FilePicker
+import com.darkrockstudios.libraries.mpfilepicker.MPFile
 import juweappka.composeapp.generated.resources.Res
 import juweappka.composeapp.generated.resources.ticket_image_placeholder
 import juweappka.composeapp.generated.resources.tickets_title
@@ -36,16 +41,27 @@ import org.jetbrains.compose.resources.stringResource
 import pl.edu.uw.juwenalia.presentation.components.CardGridItem
 import pl.edu.uw.juwenalia.presentation.components.CardWithAction
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun TicketsScreen() {
     var ticketCount by rememberSaveable { mutableIntStateOf(0) }
+    val uriHandler = LocalUriHandler.current
+    var showFilePicker by remember { mutableStateOf(false) }
+
+    val fileType = listOf("pdf")
+    FilePicker(show = showFilePicker, fileExtensions = fileType) { platformFile ->
+        showFilePicker = false
+    }
 
     Scaffold(topBar = {
         CenterAlignedTopAppBar(title = { Text(text = stringResource(Res.string.tickets_title)) })
     }, floatingActionButton = {
         ExtendedFloatingActionButton(
-            onClick = { ticketCount++ },
+            onClick = {
+                ticketCount++
+                showFilePicker = true
+                },
             icon = { Icon(Icons.Filled.Upload, stringResource(Res.string.upload_ticket)) },
             text = { Text(text = stringResource(Res.string.upload_ticket)) }
         )
@@ -75,7 +91,9 @@ internal fun TicketsScreen() {
                             ", a ceny będą wzrastać.",
                     buttonIcon = Icons.Filled.ShoppingCart,
                     buttonText = "Kup teraz",
-                    onButtonClick = { /* TODO */ }
+                    onButtonClick = {
+                        uriHandler.openUri("https://www.mimuw.edu.pl/pl/")
+                    }
                 )
             }
 
