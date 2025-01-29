@@ -4,6 +4,7 @@
     <!-- General -->
     <string name="search">Wyszukaj</string>
     <string name="clear">Wyczyść</string>
+    <string name="delete">Usuń</string>
 
     <!-- Home screen -->
     <string name="news_section_header">Aktualności</string>
@@ -29,4 +30,6 @@
     <string name="your_tickets">Twoje bilety</string>
     <string name="no_tickets">Nie masz żadnych biletów</string>
     <string name="no_tickets_desc">Dodaj swoje bilety do aplikacji i miej je zawsze pod ręką</string>
+    <string name="ticket_item_title">Bilet</string>
+    <string name="ticket_image_content_desc">Bilet</string>
 </resources>
