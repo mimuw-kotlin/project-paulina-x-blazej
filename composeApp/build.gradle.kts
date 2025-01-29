@@ -1,4 +1,3 @@
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -6,11 +5,11 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.kotlinSerialization)
 }
 
 kotlin {
     androidTarget {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
         }
@@ -33,8 +32,6 @@ kotlin {
             implementation(libs.androidx.activity.compose)
         }
         commonMain.dependencies {
-            implementation("io.github.vinceglb:filekit-core:0.8.8")
-            implementation("io.github.vinceglb:filekit-compose:0.8.8")
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
@@ -48,8 +45,11 @@ kotlin {
             implementation(libs.jetbrains.adaptive)
             implementation(libs.jetbrains.adaptive.layout)
             implementation(libs.jetbrains.adaptive.navigation)
-
-            implementation("io.coil-kt.coil3:coil-compose:3.0.4")
+            implementation(libs.navigation.compose)
+            implementation(libs.kotlinx.serialization.json)
+            implementation(libs.filekit.core)
+            implementation(libs.filekit.compose)
+            implementation(libs.coil.compose)
         }
     }
 }
