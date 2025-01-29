@@ -5,7 +5,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
-    alias(libs.plugins.kotlinSerialization)
+    id("io.realm.kotlin") version "1.16.0"
 }
 
 kotlin {
@@ -46,10 +46,12 @@ kotlin {
             implementation(libs.jetbrains.adaptive.layout)
             implementation(libs.jetbrains.adaptive.navigation)
             implementation(libs.navigation.compose)
-            implementation(libs.kotlinx.serialization.json)
             implementation(libs.filekit.core)
             implementation(libs.filekit.compose)
             implementation(libs.coil.compose)
+            implementation(libs.library.base)
+            implementation(libs.library.sync)
+            implementation(libs.kotlinx.coroutines.core)
         }
     }
 }
