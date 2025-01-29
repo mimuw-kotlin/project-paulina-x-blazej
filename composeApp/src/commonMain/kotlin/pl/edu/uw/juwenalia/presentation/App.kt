@@ -45,7 +45,7 @@ enum class AppDestinations(
     HOME(Res.string.home_nav, Icons.Filled.Home, Icons.Outlined.Home),
     ARTISTS(Res.string.artists_nav, Icons.Filled.PeopleAlt, Icons.Outlined.PeopleAlt),
     MAP(Res.string.map_nav, Icons.Filled.Map, Icons.Outlined.Map),
-    TICKETS(Res.string.tickets_nav, Icons.Filled.LocalActivity, Icons.Outlined.LocalActivity)
+    TICKETS(Res.string.tickets_nav, Icons.Filled.LocalActivity, Icons.Outlined.LocalActivity),
 }
 
 @Composable

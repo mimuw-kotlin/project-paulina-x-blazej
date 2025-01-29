@@ -48,6 +48,8 @@ kotlin {
             implementation(libs.jetbrains.adaptive)
             implementation(libs.jetbrains.adaptive.layout)
             implementation(libs.jetbrains.adaptive.navigation)
+
+            implementation("io.coil-kt.coil3:coil-compose:3.0.4")
         }
     }
 }
