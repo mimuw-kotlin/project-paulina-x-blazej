@@ -17,6 +17,7 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,7 +35,6 @@ import juweappka.composeapp.generated.resources.your_tickets
 import org.jetbrains.compose.resources.stringResource
 import pl.edu.uw.juwenalia.presentation.components.CardGridItem
 import pl.edu.uw.juwenalia.presentation.components.CardWithAction
-import pl.edu.uw.juwenalia.presentation.components.FeedSectionHeader
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -91,7 +91,11 @@ internal fun TicketsScreen() {
                 }
             } else {
                 item(span = { GridItemSpan(maxLineSpan) }) {
-                    FeedSectionHeader(stringResource(Res.string.your_tickets))
+                    Text(
+                        text = stringResource(Res.string.your_tickets),
+                        style = MaterialTheme.typography.titleMedium,
+                        modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
+                    )
                 }
 
                 items(ticketCount) {
