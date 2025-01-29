@@ -5,6 +5,15 @@
     <string name="search">Wyszukaj</string>
     <string name="clear">Wyczyść</string>
 
+    <!-- Home screen -->
+    <string name="news_section_header">Aktualności</string>
+    <string name="artists_section_header">Artyści</string>
+    <string name="sponsors_and_partners_section_header">Sponsorzy i partnerzy</string>
+    <string name="social_media_card_title">Przecieki?</string>
+    <string name="social_media_card_body">Wyłącznie w naszych social mediach! Zaobserwuj nas i bądź na bieżąco ze wszystkimi ogłoszeniami.</string>
+    <string name="social_media_facebook">Facebook</string>
+    <string name="social_media_instagram">Instagram</string>
+
     <!-- Navigation bar -->
     <string name="home_nav">Główna</string>
     <string name="artists_nav">Artyści</string>

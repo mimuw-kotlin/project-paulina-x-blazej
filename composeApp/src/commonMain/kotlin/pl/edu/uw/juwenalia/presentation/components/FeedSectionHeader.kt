@@ -13,10 +13,9 @@ fun FeedSectionHeader(
     text: String,
     modifier: Modifier =
         Modifier.padding(
-            top = 16.dp,
-            bottom = 8.dp
+            top = 8.dp
         ),
-    textStyle: TextStyle = MaterialTheme.typography.titleLarge
+    textStyle: TextStyle = MaterialTheme.typography.titleMedium
 ) {
     Text(
         text = text,
