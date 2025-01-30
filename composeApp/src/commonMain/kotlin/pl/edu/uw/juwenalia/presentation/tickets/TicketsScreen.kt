@@ -32,8 +32,6 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import io.github.vinceglb.filekit.compose.rememberFilePickerLauncher
 import io.github.vinceglb.filekit.core.PickerType
-import io.github.vinceglb.filekit.core.PlatformDirectory
-import io.github.vinceglb.filekit.core.PlatformFile
 import juweappka.composeapp.generated.resources.Res
 import juweappka.composeapp.generated.resources.delete
 import juweappka.composeapp.generated.resources.ticket_image_content_desc
@@ -42,7 +40,15 @@ import juweappka.composeapp.generated.resources.ticket_item_title
 import juweappka.composeapp.generated.resources.tickets_title
 import juweappka.composeapp.generated.resources.upload_ticket
 import juweappka.composeapp.generated.resources.your_tickets
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
+import pl.edu.uw.juwenalia.data.deleteFile
+import pl.edu.uw.juwenalia.data.getAppFilesDirectory
+import pl.edu.uw.juwenalia.data.getFileSet
+import pl.edu.uw.juwenalia.data.saveFile
 import pl.edu.uw.juwenalia.presentation.components.CardGridItem
 import pl.edu.uw.juwenalia.presentation.components.CardWithAction
 import pl.edu.uw.juwenalia.presentation.components.FeedSectionHeader
@@ -55,15 +61,17 @@ internal fun TicketsScreen() {
     val sheetState = rememberModalBottomSheetState()
     var showBottomSheet by remember { mutableStateOf(false) }
 
-    var files: Set<PlatformFile> by remember { mutableStateOf(emptySet()) }
-    var selectedFile: PlatformFile? by remember { mutableStateOf(null) }
-    val directory: PlatformDirectory? by remember { mutableStateOf(null) }
+    var selectedFile: String by remember { mutableStateOf("") }
+    val localFileDir = getAppFilesDirectory()
+    var fileNamesSet: Set<String> by remember { mutableStateOf(getFileSet(localFileDir)) }
 
     val ticketFilePicker =
         rememberFilePickerLauncher(
             type = PickerType.File(listOf("png")),
-            initialDirectory = directory?.path,
-            onResult = { file -> file?.let { files += it } }
+            onResult = { file -> file?.let {
+                CoroutineScope(Dispatchers.IO).launch { saveFile(it, localFileDir) }
+                fileNamesSet += it.name
+            } }
         )
 
     Scaffold(topBar = {
@@ -80,7 +88,7 @@ internal fun TicketsScreen() {
         LazyVerticalGrid(
             columns = GridCells.Adaptive(minSize = 180.dp),
             contentPadding =
-                if (files.isEmpty()) {
+                if (fileNamesSet.isEmpty()) {
                     PaddingValues(horizontal = 16.dp)
                 } else {
                     PaddingValues(start = 16.dp, end = 16.dp, bottom = 120.dp)
@@ -105,7 +113,7 @@ internal fun TicketsScreen() {
                 )
             }
 
-            if (files.isEmpty()) {
+            if (fileNamesSet.isEmpty()) {
                 item(span = { GridItemSpan(maxLineSpan) }) {
                     NoTicketsEmptyState(
                         modifier =
@@ -120,13 +128,11 @@ internal fun TicketsScreen() {
                     FeedSectionHeader(stringResource(Res.string.your_tickets))
                 }
 
-                items(files.toList()) { file ->
-                    val fileName: String = file.name
-                    val filePath: String? = file.path
+                items(fileNamesSet.toList()) { file ->
 
                     CardGridItem(
                         title = stringResource(Res.string.ticket_item_title),
-                        subtitle = fileName,
+                        subtitle = file,
                         image = Res.drawable.ticket_image_placeholder,
                         imageContentDescription =
                             stringResource(
@@ -139,7 +145,8 @@ internal fun TicketsScreen() {
                             showBottomSheet = true
                         },
                         onButtonClick = {
-                            files = files.filterNot { it.path == filePath }.toSet()
+                            deleteFile(file, localFileDir)
+                            fileNamesSet = fileNamesSet - file
                         }
                     )
                 }
@@ -154,9 +161,7 @@ internal fun TicketsScreen() {
             },
             sheetState = sheetState
         ) {
-            selectedFile?.let {
-                PhotoItem(file = it)
-            }
+            PhotoItem(selectedFile, localFileDir)
         }
     }
 }

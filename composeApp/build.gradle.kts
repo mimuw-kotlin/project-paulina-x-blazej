@@ -69,6 +69,7 @@ kotlin {
             implementation(libs.filekit.core)
             implementation(libs.filekit.compose)
             implementation(libs.coil.compose)
+            implementation(libs.okio)
         }
     }
 }

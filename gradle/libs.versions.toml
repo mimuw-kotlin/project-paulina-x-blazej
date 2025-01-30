@@ -15,6 +15,7 @@ geo = "0.7.0"
 kotlin = "2.1.10"
 koin = "4.0.2"
 navigationCompose = "2.8.0-alpha11"
+okio = "3.10.2"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
@@ -34,6 +35,7 @@ koin-composeVM = { module = "io.insert-koin:koin-compose-viewmodel", version.ref
 maplibre-compose = { module = "dev.sargunv.maplibre-compose:maplibre-compose", version = "0.6.0" }
 maplibre-composeMaterial3 = { module = "dev.sargunv.maplibre-compose:maplibre-compose-material3", version = "0.6.0" }
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
