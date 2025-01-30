@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.offset
 import juweappka.composeapp.generated.resources.Res
@@ -36,6 +37,8 @@ import pl.edu.uw.juwenalia.presentation.components.FeedSectionHeader
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun HomeScreen() {
+    val uriHandler = LocalUriHandler.current
+
     Scaffold(topBar = {
         CenterAlignedTopAppBar(title = { Text(stringResource(Res.string.app_name)) })
     }) { innerPadding ->
@@ -67,7 +70,7 @@ internal fun HomeScreen() {
                             "i zaoszczędź nawet do 50%.",
                     buttonIcon = Icons.Filled.LocalActivity,
                     buttonText = "Zgarnij bilety",
-                    onButtonClick = { /* TODO */ }
+                    onButtonClick = { uriHandler.openUri("https://www.mimuw.edu.pl/pl/") }
                 )
             }
 
@@ -110,8 +113,10 @@ internal fun HomeScreen() {
 
             item(span = { GridItemSpan(maxLineSpan) }) {
                 SocialMediaCard(
-                    onFacebookButtonClick = { /* TODO */ },
-                    onInstagramButtonClick = { /* TODO */ },
+                    onFacebookButtonClick = { uriHandler.openUri(
+                        "https://www.facebook.com/juwenalia.uw") },
+                    onInstagramButtonClick = { uriHandler.openUri(
+                        "https://www.instagram.com/juwenalia.uw/") },
                     modifier =
                         Modifier
                             .fillMaxWidth()
