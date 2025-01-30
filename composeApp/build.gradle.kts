@@ -5,7 +5,6 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
-    alias(libs.plugins.kotlinSerialization)
 }
 
 kotlin {
@@ -32,6 +31,8 @@ kotlin {
             implementation(libs.androidx.activity.compose)
         }
         commonMain.dependencies {
+
+            // Compose multiplatform
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
@@ -40,13 +41,31 @@ kotlin {
             implementation(compose.materialIconsExtended)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
-            implementation(libs.androidx.lifecycle.viewmodel)
-            implementation(libs.androidx.lifecycle.runtime.compose)
+
+            // Adaptive components
             implementation(libs.jetbrains.adaptive)
             implementation(libs.jetbrains.adaptive.layout)
             implementation(libs.jetbrains.adaptive.navigation)
+
+            // Lifecycle
+            implementation(libs.androidx.lifecycle.viewmodel)
+            implementation(libs.androidx.lifecycle.runtime.compose)
+
+            // Navigation
             implementation(libs.navigation.compose)
-            implementation(libs.kotlinx.serialization.json)
+
+            // Koin
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.composeVM)
+
+            // Map screen
+            implementation(libs.maplibre.compose)
+            implementation(libs.maplibre.composeMaterial3)
+            implementation(libs.geo)
+            implementation(libs.geo.compose)
+
+            // Tickets screen
             implementation(libs.filekit.core)
             implementation(libs.filekit.compose)
             implementation(libs.coil.compose)
