@@ -45,10 +45,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
+import pl.edu.uw.juwenalia.data.FolderEnum
 import pl.edu.uw.juwenalia.data.deleteFile
 import pl.edu.uw.juwenalia.data.getAppFilesDirectory
 import pl.edu.uw.juwenalia.data.getFileSet
-import pl.edu.uw.juwenalia.data.saveFile
+import pl.edu.uw.juwenalia.data.savePickedFile
 import pl.edu.uw.juwenalia.presentation.components.CardGridItem
 import pl.edu.uw.juwenalia.presentation.components.CardWithAction
 import pl.edu.uw.juwenalia.presentation.components.FeedSectionHeader
@@ -63,13 +64,14 @@ internal fun TicketsScreen() {
 
     var selectedFile: String by remember { mutableStateOf("") }
     val localFileDir = getAppFilesDirectory()
-    var fileNamesSet: Set<String> by remember { mutableStateOf(getFileSet(localFileDir)) }
+    var fileNamesSet: Set<String> by remember {
+        mutableStateOf(getFileSet(localFileDir, FolderEnum.TICKET_RESOURCES)) }
 
     val ticketFilePicker =
         rememberFilePickerLauncher(
             type = PickerType.File(listOf("png")),
             onResult = { file -> file?.let {
-                CoroutineScope(Dispatchers.IO).launch { saveFile(it, localFileDir) }
+                CoroutineScope(Dispatchers.IO).launch { savePickedFile(localFileDir, it) }
                 fileNamesSet += it.name
             } }
         )
@@ -145,7 +147,7 @@ internal fun TicketsScreen() {
                             showBottomSheet = true
                         },
                         onButtonClick = {
-                            deleteFile(file, localFileDir)
+                            deleteFile(localFileDir, FolderEnum.TICKET_RESOURCES, file)
                             fileNamesSet = fileNamesSet - file
                         }
                     )
@@ -161,7 +163,7 @@ internal fun TicketsScreen() {
             },
             sheetState = sheetState
         ) {
-            PhotoItem(selectedFile, localFileDir)
+            PhotoItem(localFileDir, selectedFile)
         }
     }
 }

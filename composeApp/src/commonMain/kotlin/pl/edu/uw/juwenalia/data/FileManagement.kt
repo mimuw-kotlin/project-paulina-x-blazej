@@ -18,24 +18,24 @@ enum class FolderEnum(val value: String) {
 @Composable
 expect fun getAppFilesDirectory(): String
 
-fun getPath(filesDir: String, folder: String, filename: String? = null) : Path {
+fun getPath(filesDir: String, folder: FolderEnum, filename: String? = null) : Path {
     return when(filename) {
-        null-> "$filesDir/$folder".toPath()
-        else-> "$filesDir/$folder/$filename".toPath()
+        null-> "$filesDir/${folder.value}".toPath()
+        else-> "$filesDir/${folder.value}/$filename".toPath()
     }
 }
 
-fun checkTicketPath(filesDir: String) {
-    val expectedPath = getPath(filesDir, FolderEnum.TICKET_RESOURCES.value)
+fun checkPathExistence(filesDir: String, folder: FolderEnum) {
+    val expectedPath = getPath(filesDir, folder)
     val fileSystem = FileSystem.SYSTEM
     if (!fileSystem.exists(expectedPath)) {
         fileSystem.createDirectory(expectedPath)
     }
 }
 
-suspend fun saveFile(file: PlatformFile, filesDir: String) {
-    val filePath = getPath(filesDir, FolderEnum.TICKET_RESOURCES.value, file.name)
-    checkTicketPath(filesDir)
+suspend fun savePickedFile(filesDir: String, file: PlatformFile) {
+    val filePath = getPath(filesDir, FolderEnum.TICKET_RESOURCES, file.name)
+    checkPathExistence(filesDir, FolderEnum.TICKET_RESOURCES)
 
     val fileBytes = file.readBytes()
     FileSystem.SYSTEM.sink(filePath).buffer().use { sink ->
@@ -43,17 +43,17 @@ suspend fun saveFile(file: PlatformFile, filesDir: String) {
     }
 }
 
-fun deleteFile(fileName: String, filesDir: String) {
+fun deleteFile(filesDir: String, folder: FolderEnum, fileName: String) {
     val fileSystem = FileSystem.SYSTEM
-    val fileToDelete = getPath(filesDir, FolderEnum.TICKET_RESOURCES.value, fileName)
-    checkTicketPath(filesDir)
+    val fileToDelete = getPath(filesDir, folder, fileName)
+    checkPathExistence(filesDir, folder)
 
     fileSystem.delete(fileToDelete)
 }
 
-fun getFileBytesByName(fileName: String, filesDir: String): ByteArray? {
-    val filePath = "$filesDir/${FolderEnum.TICKET_RESOURCES}/${fileName}".toPath()
-    checkTicketPath(filesDir)
+fun getFileBytesByName(filesDir: String, folder: FolderEnum, fileName: String): ByteArray? {
+    val filePath = getPath(filesDir, folder, fileName)
+    checkPathExistence(filesDir, folder)
 
     return try {
         FileSystem.SYSTEM.source(filePath).buffer().use { source ->
@@ -65,10 +65,10 @@ fun getFileBytesByName(fileName: String, filesDir: String): ByteArray? {
     }
 }
 
-fun getFileSet(filesDir: String) : Set<String> {
+fun getFileSet(filesDir: String, folder: FolderEnum) : Set<String> {
     val fileSystem = FileSystem.SYSTEM
-    val directory = getPath(filesDir, FolderEnum.TICKET_RESOURCES.value)
-    checkTicketPath(filesDir)
+    val directory = getPath(filesDir, folder)
+    checkPathExistence(filesDir, folder)
 
     val files = fileSystem.list(directory)
 
