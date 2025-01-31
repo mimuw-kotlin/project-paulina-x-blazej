@@ -9,30 +9,6 @@ import okio.SYSTEM
 import okio.buffer
 import okio.use
 
-enum class FolderEnum(val value: String) {
-    TICKET_RESOURCES("ticket_resources"),
-    JSON("json"),
-    ARTIST_IMAGES("artist_images")
-}
-
-@Composable
-expect fun getAppFilesDirectory(): String
-
-fun getPath(filesDir: String, folder: FolderEnum, filename: String? = null) : Path {
-    return when(filename) {
-        null-> "$filesDir/${folder.value}".toPath()
-        else-> "$filesDir/${folder.value}/$filename".toPath()
-    }
-}
-
-fun checkPathExistence(filesDir: String, folder: FolderEnum) {
-    val expectedPath = getPath(filesDir, folder)
-    val fileSystem = FileSystem.SYSTEM
-    if (!fileSystem.exists(expectedPath)) {
-        fileSystem.createDirectory(expectedPath)
-    }
-}
-
 suspend fun savePickedFile(filesDir: String, file: PlatformFile) {
     val filePath = getPath(filesDir, FolderEnum.TICKET_RESOURCES, file.name)
     checkPathExistence(filesDir, FolderEnum.TICKET_RESOURCES)

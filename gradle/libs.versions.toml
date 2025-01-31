@@ -14,6 +14,7 @@ filekitCore = "0.8.8"
 geo = "0.7.0"
 kotlin = "2.1.10"
 koin = "4.0.2"
+kotlinxSerializationJson = "1.8.0"
 navigationCompose = "2.8.0-alpha11"
 okio = "3.10.2"
 
@@ -32,6 +33,7 @@ jetbrains-adaptive-navigation = { module = "org.jetbrains.compose.material3.adap
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
 koin-composeVM = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 maplibre-compose = { module = "dev.sargunv.maplibre-compose:maplibre-compose", version = "0.6.0" }
 maplibre-composeMaterial3 = { module = "dev.sargunv.maplibre-compose:maplibre-compose-material3", version = "0.6.0" }
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }

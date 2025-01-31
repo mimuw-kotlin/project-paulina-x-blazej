@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    kotlin("plugin.serialization") version "2.1.0"
 }
 
 kotlin {
@@ -70,6 +71,9 @@ kotlin {
             implementation(libs.filekit.compose)
             implementation(libs.coil.compose)
             implementation(libs.okio)
+
+            // Serialization
+            implementation(libs.kotlinx.serialization.json)
         }
     }
 }
