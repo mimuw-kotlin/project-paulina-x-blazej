@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocalActivity
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -18,6 +19,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalDensity
@@ -33,10 +38,12 @@ import juweappka.composeapp.generated.resources.sponsor_logo_placeholder
 import juweappka.composeapp.generated.resources.sponsors_and_partners_section_header
 import org.jetbrains.compose.resources.stringResource
 import pl.edu.uw.juwenalia.data.ArtistData
+import pl.edu.uw.juwenalia.data.FolderEnum
 import pl.edu.uw.juwenalia.data.NewsData
 import pl.edu.uw.juwenalia.data.downloadFeed
 import pl.edu.uw.juwenalia.data.getAppFilesDirectory
 import pl.edu.uw.juwenalia.data.getArtists
+import pl.edu.uw.juwenalia.data.getFileSet
 import pl.edu.uw.juwenalia.data.getNews
 import pl.edu.uw.juwenalia.presentation.components.CardWithAction
 import pl.edu.uw.juwenalia.presentation.components.FeedSectionHeader
@@ -46,11 +53,10 @@ import pl.edu.uw.juwenalia.presentation.components.FeedSectionHeader
 internal fun HomeScreen() {
     val uriHandler = LocalUriHandler.current
     val localFileDir = getAppFilesDirectory()
-    var newsData: List<NewsData> = emptyList()
-    var artistData: List<ArtistData> = emptyList()
+    var newsData: List<NewsData> by remember { mutableStateOf(emptyList()) }
+    var artistData: List<ArtistData> by remember { mutableStateOf(emptyList()) }
 
     LaunchedEffect(Unit) {
-        downloadFeed(localFileDir)
         newsData = getNews(localFileDir)
         artistData = getArtists(localFileDir)
     }
@@ -172,11 +178,13 @@ internal fun HomeScreen() {
                 FeedSectionHeader(stringResource(Res.string.news_section_header))
             }
 
-            items(3) {
+            items(newsData) { news ->
                 NewsGridItem(
-                    title = "Dawid Podsiadło na jUWenaliach 2025!",
+                    title = news.title,
                     darkTextColor = false,
                     image = Res.drawable.artist_photo_placeholder,
+                    filesDir = localFileDir,
+                    fileName = news.image,
                     imageContentDescription = "Zapowiedź artystów",
                     onClick = { /* TODO */ }
                 )

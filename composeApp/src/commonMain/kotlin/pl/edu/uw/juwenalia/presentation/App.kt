@@ -17,6 +17,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -31,6 +32,8 @@ import juweappka.composeapp.generated.resources.map_nav
 import juweappka.composeapp.generated.resources.tickets_nav
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
+import pl.edu.uw.juwenalia.data.downloadFeed
+import pl.edu.uw.juwenalia.data.getAppFilesDirectory
 import pl.edu.uw.juwenalia.presentation.artists.ArtistsScreen
 import pl.edu.uw.juwenalia.presentation.home.HomeScreen
 import pl.edu.uw.juwenalia.presentation.map.MapScreen
@@ -60,6 +63,11 @@ internal fun App(
         val navController = rememberNavController()
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination?.route
+
+        val localFileDir = getAppFilesDirectory()
+        LaunchedEffect(Unit) {
+            downloadFeed(localFileDir)
+        }
 
         NavigationSuiteScaffold(
             navigationSuiteItems = {
