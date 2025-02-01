@@ -47,6 +47,7 @@ import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import pl.edu.uw.juwenalia.data.FolderEnum
 import pl.edu.uw.juwenalia.data.deleteFile
+import pl.edu.uw.juwenalia.data.downloadFeedJson
 import pl.edu.uw.juwenalia.data.getAppFilesDirectory
 import pl.edu.uw.juwenalia.data.getFileSet
 import pl.edu.uw.juwenalia.data.savePickedFile
@@ -71,7 +72,9 @@ internal fun TicketsScreen() {
         rememberFilePickerLauncher(
             type = PickerType.File(listOf("png")),
             onResult = { file -> file?.let {
-                CoroutineScope(Dispatchers.IO).launch { savePickedFile(localFileDir, it) }
+                CoroutineScope(Dispatchers.IO).launch {
+                    savePickedFile(localFileDir, it)
+                    downloadFeedJson(localFileDir)}
                 fileNamesSet += it.name
             } }
         )
