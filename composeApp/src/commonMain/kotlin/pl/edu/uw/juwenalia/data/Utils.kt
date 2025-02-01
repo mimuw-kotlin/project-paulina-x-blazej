@@ -12,7 +12,7 @@ expect fun getAppFilesDirectory(): String
 enum class FolderEnum(val value: String) {
     TICKET_RESOURCES("ticket_resources"),
     JSON("json"),
-    ARTIST_IMAGES("artist_images")
+    IMAGES("artist_images")
 }
 
 fun getPath(filesDir: String, folder: FolderEnum, filename: String? = null) : Path {
@@ -28,4 +28,10 @@ fun checkPathExistence(filesDir: String, folder: FolderEnum) {
     if (!fileSystem.exists(expectedPath)) {
         fileSystem.createDirectory(expectedPath)
     }
+}
+
+fun checkFileExistence(filesDir: String, folder: FolderEnum, fileName: String): Boolean {
+    val expectedPath = getPath(filesDir, folder, fileName)
+    val fileSystem = FileSystem.SYSTEM
+    return fileSystem.exists(expectedPath)
 }

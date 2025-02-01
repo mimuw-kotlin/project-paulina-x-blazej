@@ -15,6 +15,7 @@ geo = "0.7.0"
 kotlin = "2.1.10"
 koin = "4.0.2"
 kotlinxSerializationJson = "1.8.0"
+ktorClientCio = "2.3.0"
 ktorClientCore = "2.3.7"
 ktorClientJson = "2.2.4"
 navigationCompose = "2.8.0-alpha11"
@@ -36,6 +37,7 @@ koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
 koin-composeVM = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktorClientCio" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktorClientCore" }
 ktor-client-json = { module = "io.ktor:ktor-client-json", version.ref = "ktorClientJson" }
 ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktorClientJson" }

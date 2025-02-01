@@ -19,6 +19,12 @@ suspend fun savePickedFile(filesDir: String, file: PlatformFile) {
     }
 }
 
+fun saveJsonFile(filesDir: String, folder: FolderEnum, fileName: String, contents: String) {
+    val filePath = getPath(filesDir, folder, fileName)
+    checkPathExistence(filesDir, folder)
+    FileSystem.SYSTEM.sink(filePath).buffer().use { sink -> sink.writeUtf8(contents) }
+}
+
 fun saveFile(filesDir: String, folder: FolderEnum,
                      fileName: String, fileBytes: ByteArray) {
     val filePath = getPath(filesDir, folder, fileName)
@@ -46,6 +52,18 @@ fun getFileBytesByName(filesDir: String, folder: FolderEnum, fileName: String): 
         }
     } catch (e: Exception) {
         e.printStackTrace()
+        null
+    }
+}
+
+fun getJsonString(filesDir: String, folder: FolderEnum, fileName: String): String? {
+    val filePath = getPath(filesDir, folder, fileName)
+    checkPathExistence(filesDir, folder)
+
+    return try {
+        FileSystem.SYSTEM.source(filePath).buffer().readUtf8()
+    } catch (e: Exception) {
+        println("Error reading json: ${e.message}")
         null
     }
 }

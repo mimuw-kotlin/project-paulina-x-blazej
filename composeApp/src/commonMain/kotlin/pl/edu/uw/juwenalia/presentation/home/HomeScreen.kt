@@ -17,6 +17,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalDensity
@@ -31,6 +32,12 @@ import juweappka.composeapp.generated.resources.news_section_header
 import juweappka.composeapp.generated.resources.sponsor_logo_placeholder
 import juweappka.composeapp.generated.resources.sponsors_and_partners_section_header
 import org.jetbrains.compose.resources.stringResource
+import pl.edu.uw.juwenalia.data.ArtistData
+import pl.edu.uw.juwenalia.data.NewsData
+import pl.edu.uw.juwenalia.data.downloadFeed
+import pl.edu.uw.juwenalia.data.getAppFilesDirectory
+import pl.edu.uw.juwenalia.data.getArtists
+import pl.edu.uw.juwenalia.data.getNews
 import pl.edu.uw.juwenalia.presentation.components.CardWithAction
 import pl.edu.uw.juwenalia.presentation.components.FeedSectionHeader
 
@@ -38,6 +45,15 @@ import pl.edu.uw.juwenalia.presentation.components.FeedSectionHeader
 @Composable
 internal fun HomeScreen() {
     val uriHandler = LocalUriHandler.current
+    val localFileDir = getAppFilesDirectory()
+    var newsData: List<NewsData> = emptyList()
+    var artistData: List<ArtistData> = emptyList()
+
+    LaunchedEffect(Unit) {
+        downloadFeed(localFileDir)
+        newsData = getNews(localFileDir)
+        artistData = getArtists(localFileDir)
+    }
 
     Scaffold(topBar = {
         CenterAlignedTopAppBar(title = { Text(stringResource(Res.string.app_name)) })
