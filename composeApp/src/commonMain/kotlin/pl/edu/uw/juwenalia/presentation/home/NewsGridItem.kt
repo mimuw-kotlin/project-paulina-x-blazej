@@ -42,7 +42,7 @@ internal fun NewsGridItem(
         if (fileBytes != null) {
             AsyncImage(
                 fileBytes,
-                contentDescription = fileName,
+                contentDescription = imageContentDescription,
                 contentScale = ContentScale.Crop,
                 modifier =
                 Modifier

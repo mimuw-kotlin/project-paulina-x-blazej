@@ -123,10 +123,11 @@ internal fun HomeScreen() {
                             }
                         }
                 ) {
-                    items(10) {
+                    items(artistData.size) { i ->
                         ArtistListItem(
-                            name = "Dawid Podsiadło",
-                            image = Res.drawable.artist_photo_placeholder,
+                            name = artistData[i].name,
+                            filesDir = localFileDir,
+                            fileName = artistData[i].image,
                             onClick = { /* TODO */ }
                         )
                     }
