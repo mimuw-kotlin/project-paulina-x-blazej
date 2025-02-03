@@ -2,7 +2,7 @@ package pl.edu.uw.juwenalia
 
 import androidx.compose.ui.window.ComposeUIViewController
 import pl.edu.uw.juwenalia.di.initKoin
-import pl.edu.uw.juwenalia.presentation.App
+import pl.edu.uw.juwenalia.ui.App
 import platform.UIKit.UIScreen
 import platform.UIKit.UIUserInterfaceStyle
 

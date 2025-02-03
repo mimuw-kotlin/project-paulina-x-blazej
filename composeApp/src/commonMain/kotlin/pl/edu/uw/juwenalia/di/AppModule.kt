@@ -7,7 +7,7 @@ import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 import pl.edu.uw.juwenalia.data.repository.DefaultMapPointRepository
 import pl.edu.uw.juwenalia.data.repository.MapPointRepository
-import pl.edu.uw.juwenalia.presentation.map.MapViewModel
+import pl.edu.uw.juwenalia.ui.map.MapViewModel
 
 val appModule =
     module {
