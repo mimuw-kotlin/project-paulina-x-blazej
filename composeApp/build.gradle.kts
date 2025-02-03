@@ -30,6 +30,10 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+
+            // Koin
+            implementation(libs.koin.android)
+            implementation(libs.koin.androidx.compose)
         }
         commonMain.dependencies {
 
@@ -63,8 +67,8 @@ kotlin {
             // Map screen
             implementation(libs.maplibre.compose)
             implementation(libs.maplibre.composeMaterial3)
-            implementation(libs.geo)
-            implementation(libs.geo.compose)
+            implementation(libs.compass.geolocation)
+            implementation(libs.compass.geolocation.mobile)
 
             // Tickets screen
             implementation(libs.filekit.core)
