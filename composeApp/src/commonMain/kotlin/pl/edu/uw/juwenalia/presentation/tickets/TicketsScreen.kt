@@ -47,13 +47,12 @@ import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import pl.edu.uw.juwenalia.data.FolderEnum
 import pl.edu.uw.juwenalia.data.deleteFile
-import pl.edu.uw.juwenalia.data.downloadFeed
 import pl.edu.uw.juwenalia.data.getAppFilesDirectory
 import pl.edu.uw.juwenalia.data.getFileSet
 import pl.edu.uw.juwenalia.data.savePickedFile
-import pl.edu.uw.juwenalia.presentation.components.CardGridItem
-import pl.edu.uw.juwenalia.presentation.components.CardWithAction
-import pl.edu.uw.juwenalia.presentation.components.FeedSectionHeader
+import pl.edu.uw.juwenalia.presentation.common.CardGridItem
+import pl.edu.uw.juwenalia.presentation.common.CardWithAction
+import pl.edu.uw.juwenalia.presentation.common.FeedSectionHeader
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -66,16 +65,20 @@ internal fun TicketsScreen() {
     var selectedFile: String by remember { mutableStateOf("") }
     val localFileDir = getAppFilesDirectory()
     var fileNamesSet: Set<String> by remember {
-        mutableStateOf(getFileSet(localFileDir, FolderEnum.TICKET_RESOURCES)) }
+        mutableStateOf(getFileSet(localFileDir, FolderEnum.TICKET_RESOURCES))
+    }
 
     val ticketFilePicker =
         rememberFilePickerLauncher(
             type = PickerType.File(listOf("png")),
-            onResult = { file -> file?.let {
-                CoroutineScope(Dispatchers.IO).launch {
-                    savePickedFile(localFileDir, it) }
-                fileNamesSet += it.name
-            } }
+            onResult = { file ->
+                file?.let {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        savePickedFile(localFileDir, it)
+                    }
+                    fileNamesSet += it.name
+                }
+            }
         )
 
     Scaffold(topBar = {

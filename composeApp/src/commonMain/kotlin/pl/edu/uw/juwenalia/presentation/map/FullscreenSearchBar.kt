@@ -1,4 +1,4 @@
-package pl.edu.uw.juwenalia.presentation.components
+package pl.edu.uw.juwenalia.presentation.map
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.material.icons.Icons
@@ -9,6 +9,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.SearchBar
+import androidx.compose.material3.SearchBarColors
 import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,10 +27,11 @@ fun FullscreenSearchBar(
     onSearch: (String) -> Unit,
     expanded: Boolean,
     onExpandedChange: (Boolean) -> Unit,
-    onFocus: () -> Unit,
+    onLeadingButtonClick: () -> Unit,
     onQueryClear: () -> Unit,
-    searchContent: @Composable ColumnScope.() -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    colors: SearchBarColors = SearchBarDefaults.colors(),
+    searchContent: @Composable ColumnScope.() -> Unit
 ) {
     SearchBar(
         inputField = {
@@ -41,7 +43,7 @@ fun FullscreenSearchBar(
                 onExpandedChange = onExpandedChange,
                 placeholder = { Text(stringResource(Res.string.search)) },
                 leadingIcon = {
-                    IconButton(onClick = onFocus) {
+                    IconButton(onClick = onLeadingButtonClick) {
                         Icon(
                             if (expanded) {
                                 Icons.AutoMirrored.Filled.ArrowBack
@@ -67,6 +69,7 @@ fun FullscreenSearchBar(
         expanded = expanded,
         onExpandedChange = onExpandedChange,
         modifier = modifier,
-        content = searchContent
+        content = searchContent,
+        colors = colors
     )
 }

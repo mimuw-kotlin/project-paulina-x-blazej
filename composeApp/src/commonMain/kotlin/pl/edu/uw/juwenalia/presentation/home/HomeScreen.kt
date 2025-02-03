@@ -38,15 +38,12 @@ import juweappka.composeapp.generated.resources.sponsor_logo_placeholder
 import juweappka.composeapp.generated.resources.sponsors_and_partners_section_header
 import org.jetbrains.compose.resources.stringResource
 import pl.edu.uw.juwenalia.data.ArtistData
-import pl.edu.uw.juwenalia.data.FolderEnum
 import pl.edu.uw.juwenalia.data.NewsData
-import pl.edu.uw.juwenalia.data.downloadFeed
 import pl.edu.uw.juwenalia.data.getAppFilesDirectory
 import pl.edu.uw.juwenalia.data.getArtists
-import pl.edu.uw.juwenalia.data.getFileSet
 import pl.edu.uw.juwenalia.data.getNews
-import pl.edu.uw.juwenalia.presentation.components.CardWithAction
-import pl.edu.uw.juwenalia.presentation.components.FeedSectionHeader
+import pl.edu.uw.juwenalia.presentation.common.CardWithAction
+import pl.edu.uw.juwenalia.presentation.common.FeedSectionHeader
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -136,10 +133,16 @@ internal fun HomeScreen() {
 
             item(span = { GridItemSpan(maxLineSpan) }) {
                 SocialMediaCard(
-                    onFacebookButtonClick = { uriHandler.openUri(
-                        "https://www.facebook.com/juwenalia.uw") },
-                    onInstagramButtonClick = { uriHandler.openUri(
-                        "https://www.instagram.com/juwenalia.uw/") },
+                    onFacebookButtonClick = {
+                        uriHandler.openUri(
+                            "https://www.facebook.com/juwenalia.uw"
+                        )
+                    },
+                    onInstagramButtonClick = {
+                        uriHandler.openUri(
+                            "https://www.instagram.com/juwenalia.uw/"
+                        )
+                    },
                     modifier =
                         Modifier
                             .fillMaxWidth()

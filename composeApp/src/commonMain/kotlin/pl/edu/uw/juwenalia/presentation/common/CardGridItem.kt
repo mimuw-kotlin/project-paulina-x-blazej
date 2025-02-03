@@ -1,4 +1,4 @@
-package pl.edu.uw.juwenalia.presentation.components
+package pl.edu.uw.juwenalia.presentation.common
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable

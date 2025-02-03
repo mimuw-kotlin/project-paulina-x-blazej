@@ -5,6 +5,8 @@
     <string name="search">Wyszukaj</string>
     <string name="clear">Wyczyść</string>
     <string name="delete">Usuń</string>
+    <string name="filter">Filtr</string>
+    <string name="selected">Zaznaczono</string>
 
     <!-- Home screen -->
     <string name="news_section_header">Aktualności</string>
@@ -23,6 +25,12 @@
 
     <!-- Map screen -->
     <string name="festival_place">Teren festiwalu</string>
+    <string name="fix_gps">Ustal pozycję GPS</string>
+    <string name="food">Jedzenie</string>
+    <string name="wc">Toalety</string>
+    <string name="beer">Piwo</string>
+    <string name="water">Woda</string>
+    <string name="exhibitors">Wystawcy</string>
 
     <!-- Tickets screen -->
     <string name="tickets_title">Bilety</string>
