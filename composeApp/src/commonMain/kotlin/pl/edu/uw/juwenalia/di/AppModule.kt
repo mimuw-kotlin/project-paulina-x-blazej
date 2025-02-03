@@ -6,12 +6,22 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 import pl.edu.uw.juwenalia.data.repository.DefaultMapPointRepository
+import pl.edu.uw.juwenalia.data.repository.DefaultTicketRepository
 import pl.edu.uw.juwenalia.data.repository.MapPointRepository
+import pl.edu.uw.juwenalia.data.repository.TicketRepository
 import pl.edu.uw.juwenalia.ui.map.MapViewModel
+import pl.edu.uw.juwenalia.ui.tickets.TicketsViewModel
 
 val appModule =
     module {
-        singleOf(::DefaultMapPointRepository) { bind<MapPointRepository>() }
+        // Singletons
         single { Geolocator() }
+
+        // Repositories
+        singleOf(::DefaultMapPointRepository) { bind<MapPointRepository>() }
+        singleOf(::DefaultTicketRepository) { bind<TicketRepository>() }
+
+        // View models
         viewModelOf(::MapViewModel)
+        viewModelOf(::TicketsViewModel)
     }

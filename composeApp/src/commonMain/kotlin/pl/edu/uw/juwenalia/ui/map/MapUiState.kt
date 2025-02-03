@@ -4,15 +4,9 @@ import dev.sargunv.maplibrecompose.expressions.ast.Expression
 import dev.sargunv.maplibrecompose.expressions.dsl.nil
 import dev.sargunv.maplibrecompose.expressions.value.BooleanValue
 import io.github.dellisd.spatialk.geojson.Position
+import pl.edu.uw.juwenalia.data.model.GpsState
 import pl.edu.uw.juwenalia.data.model.MapPoint
 import pl.edu.uw.juwenalia.data.model.MapPointCategory
-
-enum class GpsState {
-    NOT_FIXED,
-    FIXED,
-    LOADING,
-    UNAVAILABLE
-}
 
 data class MapUiState(
     val searchQuery: String = "",

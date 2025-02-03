@@ -39,7 +39,7 @@ import juweappka.composeapp.generated.resources.sponsors_and_partners_section_he
 import org.jetbrains.compose.resources.stringResource
 import pl.edu.uw.juwenalia.data.ArtistData
 import pl.edu.uw.juwenalia.data.NewsData
-import pl.edu.uw.juwenalia.data.getAppFilesDirectory
+import pl.edu.uw.juwenalia.data.file.getAppFilesDirectory
 import pl.edu.uw.juwenalia.data.getArtists
 import pl.edu.uw.juwenalia.data.getNews
 import pl.edu.uw.juwenalia.ui.common.CardWithAction

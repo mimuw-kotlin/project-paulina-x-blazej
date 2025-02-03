@@ -18,22 +18,21 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.imageResource
-import pl.edu.uw.juwenalia.data.FolderEnum
-import pl.edu.uw.juwenalia.data.getFileBytesByName
+import pl.edu.uw.juwenalia.data.file.getFileBytesByName
 
 @Composable
 internal fun NewsGridItem(
     title: String,
     darkTextColor: Boolean,
+    imageContentDescription: String,
     image: DrawableResource? = null,
     filesDir: String? = null,
     fileName: String? = null,
-    imageContentDescription: String,
     onClick: () -> Unit
 ) {
     var fileBytes: ByteArray? = null
     if (filesDir != null && fileName != null) {
-        fileBytes = getFileBytesByName(filesDir, FolderEnum.IMAGES, fileName)
+        fileBytes = getFileBytesByName(filesDir, "artist_images", fileName)
     }
 
     Box(

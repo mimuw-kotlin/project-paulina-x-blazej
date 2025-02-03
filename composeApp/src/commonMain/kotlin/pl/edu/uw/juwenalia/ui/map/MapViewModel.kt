@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import pl.edu.uw.juwenalia.data.model.GpsState
 import pl.edu.uw.juwenalia.data.model.MapPoint
 import pl.edu.uw.juwenalia.data.model.MapPointCategory
 import pl.edu.uw.juwenalia.data.repository.MapPointRepository

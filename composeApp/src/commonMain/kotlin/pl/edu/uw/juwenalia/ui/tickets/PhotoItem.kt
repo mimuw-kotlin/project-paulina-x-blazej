@@ -8,20 +8,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import pl.edu.uw.juwenalia.data.FolderEnum
-import pl.edu.uw.juwenalia.data.getFileBytesByName
 
 @Composable
 internal fun PhotoItem(
-    filesDir: String,
-    fileName: String
+    fileBytes: ByteArray?,
+    filename: String
 ) {
-    val fileBytes = getFileBytesByName(filesDir, FolderEnum.TICKET_RESOURCES, fileName)
-
     fileBytes?.let {
         AsyncImage(
             fileBytes,
-            contentDescription = fileName,
+            contentDescription = filename,
             contentScale = ContentScale.Fit,
             modifier =
                 Modifier

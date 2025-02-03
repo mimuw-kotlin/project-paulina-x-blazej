@@ -40,6 +40,7 @@ import juweappka.composeapp.generated.resources.fix_gps
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
+import pl.edu.uw.juwenalia.data.model.GpsState
 import pl.edu.uw.juwenalia.data.source.StaticMapData.FESTIVAL_PLACE_DEFAULT_ZOOM
 import pl.edu.uw.juwenalia.data.source.StaticMapData.FESTIVAL_PLACE_LATITUDE
 import pl.edu.uw.juwenalia.data.source.StaticMapData.FESTIVAL_PLACE_LONGITUDE

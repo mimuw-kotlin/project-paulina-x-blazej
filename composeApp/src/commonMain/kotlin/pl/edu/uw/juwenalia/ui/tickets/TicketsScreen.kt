@@ -24,10 +24,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
@@ -41,43 +39,24 @@ import juweappka.composeapp.generated.resources.ticket_item_title
 import juweappka.composeapp.generated.resources.tickets_title
 import juweappka.composeapp.generated.resources.upload_ticket
 import juweappka.composeapp.generated.resources.your_tickets
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
-import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
-import pl.edu.uw.juwenalia.data.FolderEnum
-import pl.edu.uw.juwenalia.data.deleteFile
-import pl.edu.uw.juwenalia.data.getAppFilesDirectory
-import pl.edu.uw.juwenalia.data.getFileSet
-import pl.edu.uw.juwenalia.data.savePickedFile
+import org.koin.compose.viewmodel.koinViewModel
 import pl.edu.uw.juwenalia.ui.common.CardGridItem
 import pl.edu.uw.juwenalia.ui.common.CardWithAction
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun TicketsScreen() {
+    val ticketsViewModel = koinViewModel<TicketsViewModel>()
+    val ticketsUiState by ticketsViewModel.uiState.collectAsState()
+
     val uriHandler = LocalUriHandler.current
-
-    val sheetState = rememberModalBottomSheetState()
-    var showBottomSheet by remember { mutableStateOf(false) }
-
-    var selectedFile: String by remember { mutableStateOf("") }
-    val localFileDir = getAppFilesDirectory()
-    var fileNamesSet: Set<String> by remember {
-        mutableStateOf(getFileSet(localFileDir, FolderEnum.TICKET_RESOURCES))
-    }
 
     val ticketFilePicker =
         rememberFilePickerLauncher(
             type = PickerType.File(listOf("png")),
-            onResult = { file ->
-                file?.let {
-                    CoroutineScope(Dispatchers.IO).launch {
-                        savePickedFile(localFileDir, it)
-                    }
-                    fileNamesSet += it.name
-                }
+            onResult = {
+                it?.let { ticketsViewModel.saveTicket(it) }
             }
         )
 
@@ -95,7 +74,7 @@ internal fun TicketsScreen() {
         LazyVerticalGrid(
             columns = GridCells.Adaptive(minSize = 180.dp),
             contentPadding =
-                if (fileNamesSet.isEmpty()) {
+                if (ticketsUiState.tickets.isEmpty()) {
                     PaddingValues(horizontal = 16.dp)
                 } else {
                     PaddingValues(start = 16.dp, end = 16.dp, bottom = 120.dp)
@@ -120,7 +99,7 @@ internal fun TicketsScreen() {
                 )
             }
 
-            if (fileNamesSet.isEmpty()) {
+            if (ticketsUiState.tickets.isEmpty()) {
                 item(span = { GridItemSpan(maxLineSpan) }) {
                     NoTicketsEmptyState(
                         modifier =
@@ -139,11 +118,10 @@ internal fun TicketsScreen() {
                     )
                 }
 
-                items(fileNamesSet.toList()) { file ->
-
+                items(ticketsUiState.tickets, key = { it }) {
                     CardGridItem(
                         title = stringResource(Res.string.ticket_item_title),
-                        subtitle = file,
+                        subtitle = it,
                         image = Res.drawable.ticket_image_placeholder,
                         imageContentDescription =
                             stringResource(
@@ -152,27 +130,30 @@ internal fun TicketsScreen() {
                         buttonIcon = Icons.Filled.Delete,
                         buttonIconContentDescription = stringResource(Res.string.delete),
                         onCardClick = {
-                            selectedFile = file
-                            showBottomSheet = true
+                            ticketsViewModel.openTicket(it)
                         },
                         onButtonClick = {
-                            deleteFile(localFileDir, FolderEnum.TICKET_RESOURCES, file)
-                            fileNamesSet = fileNamesSet - file
-                        }
+                            ticketsViewModel.deleteTicket(it)
+                        },
+                        modifier =
+                            Modifier
+                                .animateItem()
+                                .fillMaxWidth()
+                                .wrapContentHeight()
                     )
                 }
             }
         }
     }
 
-    if (showBottomSheet) {
+    val sheetState = rememberModalBottomSheetState()
+
+    if (ticketsUiState.openedTicketFilename != null) {
         ModalBottomSheet(
-            onDismissRequest = {
-                showBottomSheet = false
-            },
+            onDismissRequest = { ticketsViewModel.dismissTicket() },
             sheetState = sheetState
         ) {
-            PhotoItem(localFileDir, selectedFile)
+            PhotoItem(ticketsUiState.openedTicketBytes, ticketsUiState.openedTicketFilename!!)
         }
     }
 }

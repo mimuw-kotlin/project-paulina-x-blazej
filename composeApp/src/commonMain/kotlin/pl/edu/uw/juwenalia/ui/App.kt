@@ -34,7 +34,7 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.KoinContext
 import pl.edu.uw.juwenalia.data.downloadFeed
-import pl.edu.uw.juwenalia.data.getAppFilesDirectory
+import pl.edu.uw.juwenalia.data.file.getAppFilesDirectory
 import pl.edu.uw.juwenalia.ui.artists.ArtistsScreen
 import pl.edu.uw.juwenalia.ui.home.HomeScreen
 import pl.edu.uw.juwenalia.ui.map.MapScreen

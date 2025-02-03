@@ -1,17 +1,18 @@
-package pl.edu.uw.juwenalia.data
+package pl.edu.uw.juwenalia.data.file
 
-import androidx.compose.runtime.Composable
 import io.github.vinceglb.filekit.core.PlatformFile
-import io.ktor.client.statement.HttpResponse
 import okio.FileSystem
-import okio.Path
 import okio.SYSTEM
 import okio.buffer
 import okio.use
 
-suspend fun savePickedFile(filesDir: String, file: PlatformFile) {
-    val filePath = getPath(filesDir, FolderEnum.TICKET_RESOURCES, file.name)
-    checkPathExistence(filesDir, FolderEnum.TICKET_RESOURCES)
+suspend fun savePickedFile(
+    filesDir: String,
+    folder: String,
+    file: PlatformFile
+) {
+    val filePath = getPath(filesDir, folder, file.name)
+    checkPathExistence(filesDir, folder)
 
     val fileBytes = file.readBytes()
     FileSystem.SYSTEM.sink(filePath).buffer().use { sink ->
@@ -19,22 +20,39 @@ suspend fun savePickedFile(filesDir: String, file: PlatformFile) {
     }
 }
 
-fun saveJsonFile(filesDir: String, folder: FolderEnum, fileName: String, contents: String) {
+fun saveJsonFile(
+    filesDir: String,
+    folder: String,
+    fileName: String,
+    contents: String
+) {
     val filePath = getPath(filesDir, folder, fileName)
     checkPathExistence(filesDir, folder)
-    FileSystem.SYSTEM.sink(filePath).buffer().use { sink -> sink.writeUtf8(contents) }
+    FileSystem.SYSTEM
+        .sink(filePath)
+        .buffer()
+        .use { sink -> sink.writeUtf8(contents) }
 }
 
-fun saveFile(filesDir: String, folder: FolderEnum,
-                     fileName: String, fileBytes: ByteArray) {
+fun saveFile(
+    filesDir: String,
+    folder: String,
+    fileName: String,
+    fileBytes: ByteArray
+) {
     val filePath = getPath(filesDir, folder, fileName)
     checkPathExistence(filesDir, folder)
 
     FileSystem.SYSTEM.sink(filePath).buffer().use { sink ->
-        sink.write(fileBytes) }
+        sink.write(fileBytes)
+    }
 }
 
-fun deleteFile(filesDir: String, folder: FolderEnum, fileName: String) {
+fun deleteFile(
+    filesDir: String,
+    folder: String,
+    fileName: String
+) {
     val fileSystem = FileSystem.SYSTEM
     val fileToDelete = getPath(filesDir, folder, fileName)
     checkPathExistence(filesDir, folder)
@@ -42,7 +60,11 @@ fun deleteFile(filesDir: String, folder: FolderEnum, fileName: String) {
     fileSystem.delete(fileToDelete)
 }
 
-fun getFileBytesByName(filesDir: String, folder: FolderEnum, fileName: String): ByteArray? {
+fun getFileBytesByName(
+    filesDir: String,
+    folder: String,
+    fileName: String
+): ByteArray? {
     val filePath = getPath(filesDir, folder, fileName)
     checkPathExistence(filesDir, folder)
 
@@ -56,24 +78,34 @@ fun getFileBytesByName(filesDir: String, folder: FolderEnum, fileName: String): 
     }
 }
 
-fun getJsonString(filesDir: String, folder: FolderEnum, fileName: String): String? {
+fun getJsonString(
+    filesDir: String,
+    folder: String,
+    fileName: String
+): String? {
     val filePath = getPath(filesDir, folder, fileName)
     checkPathExistence(filesDir, folder)
 
     return try {
-        FileSystem.SYSTEM.source(filePath).buffer().readUtf8()
+        FileSystem.SYSTEM
+            .source(filePath)
+            .buffer()
+            .readUtf8()
     } catch (e: Exception) {
         println("Error reading json: ${e.message}")
         null
     }
 }
 
-fun getFileSet(filesDir: String, folder: FolderEnum) : Set<String> {
+fun getFiles(
+    filesDir: String,
+    folder: String
+): List<String> {
     val fileSystem = FileSystem.SYSTEM
     val directory = getPath(filesDir, folder)
     checkPathExistence(filesDir, folder)
 
     val files = fileSystem.list(directory)
 
-    return files.map { it.name }.toSet()
+    return files.map { it.name }
 }
