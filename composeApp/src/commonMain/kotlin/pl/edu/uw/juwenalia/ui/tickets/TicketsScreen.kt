@@ -135,7 +135,7 @@ internal fun TicketsScreen() {
                     Text(
                         text = stringResource(Res.string.your_tickets),
                         modifier = Modifier.padding(top = 16.dp, bottom = 8.dp),
-                        style = MaterialTheme
+                        style = MaterialTheme.typography.titleLarge
                     )
                 }
 

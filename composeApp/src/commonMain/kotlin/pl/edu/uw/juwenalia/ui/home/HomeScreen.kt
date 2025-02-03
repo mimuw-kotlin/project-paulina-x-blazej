@@ -43,7 +43,6 @@ import pl.edu.uw.juwenalia.data.getAppFilesDirectory
 import pl.edu.uw.juwenalia.data.getArtists
 import pl.edu.uw.juwenalia.data.getNews
 import pl.edu.uw.juwenalia.ui.common.CardWithAction
-import pl.edu.uw.juwenalia.ui.common.FeedSectionHeader
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -1,4 +1,4 @@
-package pl.edu.uw.juwenalia.ui.common
+package pl.edu.uw.juwenalia.ui.home
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
