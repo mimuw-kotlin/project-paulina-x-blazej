@@ -62,12 +62,12 @@ fun saveCurrentFeedVersion(filesDir: String) {
     }
 }
 
-// If previous version is recorded and has a different id, return false
+// If previous version of feed has a different id or is not recorded, return false
 fun compareFeedVersions(
     filesDir: String,
     currId: Int
 ): Boolean {
-    if (!checkFileExistence(filesDir, "json", FEED_VERSION_FILENAME)) return true
+    if (!checkFileExistence(filesDir, "json", FEED_VERSION_FILENAME)) return false
     val feedVersionString = getJsonString(filesDir, "json", FEED_VERSION_FILENAME)
 
     if (feedVersionString == null) return true
