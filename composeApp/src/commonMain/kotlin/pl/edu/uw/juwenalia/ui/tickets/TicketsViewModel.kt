@@ -12,16 +12,16 @@ import pl.edu.uw.juwenalia.data.repository.TicketRepository
 class TicketsViewModel(
     private val ticketRepository: TicketRepository
 ) : ViewModel() {
+    private val _uiState = MutableStateFlow(TicketsUiState())
+    val uiState: StateFlow<TicketsUiState> = _uiState.asStateFlow()
+
     init {
         viewModelScope.launch {
-            ticketRepository.tickets.collect { tickets ->
-                _uiState.value = _uiState.value.copy(tickets = tickets)
+            ticketRepository.tickets.collect {
+                _uiState.value = _uiState.value.copy(tickets = it)
             }
         }
     }
-
-    private val _uiState = MutableStateFlow(TicketsUiState())
-    val uiState: StateFlow<TicketsUiState> = _uiState.asStateFlow()
 
     fun saveTicket(file: PlatformFile) {
         ticketRepository.saveTicket(file)

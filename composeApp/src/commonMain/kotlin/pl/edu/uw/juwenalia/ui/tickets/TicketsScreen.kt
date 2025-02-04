@@ -32,6 +32,10 @@ import androidx.compose.ui.unit.dp
 import io.github.vinceglb.filekit.compose.rememberFilePickerLauncher
 import io.github.vinceglb.filekit.core.PickerType
 import juweappka.composeapp.generated.resources.Res
+import juweappka.composeapp.generated.resources.buy_tickets_card_body
+import juweappka.composeapp.generated.resources.buy_tickets_card_button
+import juweappka.composeapp.generated.resources.buy_tickets_card_subtitle
+import juweappka.composeapp.generated.resources.buy_tickets_card_title
 import juweappka.composeapp.generated.resources.delete
 import juweappka.composeapp.generated.resources.ticket_image_content_desc
 import juweappka.composeapp.generated.resources.ticket_image_placeholder
@@ -45,6 +49,8 @@ import pl.edu.uw.juwenalia.ui.common.CardGridItem
 import pl.edu.uw.juwenalia.ui.common.CardWithAction
 import pl.edu.uw.juwenalia.ui.tickets.components.NoTicketsEmptyState
 import pl.edu.uw.juwenalia.ui.tickets.components.PhotoItem
+
+private const val BUY_TICKETS_URL = "https://www.mimuw.edu.pl/pl/"
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -88,15 +94,13 @@ internal fun TicketsScreen() {
             item(span = { GridItemSpan(maxLineSpan) }) {
                 CardWithAction(
                     modifier = Modifier.fillMaxWidth().wrapContentHeight(),
-                    title = "Pierwsza pula biletów",
-                    subtitle = "Już dostępna!",
-                    bodyText =
-                        "Nie zwlekaj – liczba biletów w puli jest limitowana" +
-                            ", a ceny będą wzrastać.",
+                    title = stringResource(Res.string.buy_tickets_card_title),
+                    subtitle = stringResource(Res.string.buy_tickets_card_subtitle),
+                    bodyText = stringResource(Res.string.buy_tickets_card_body),
                     buttonIcon = Icons.Filled.ShoppingCart,
-                    buttonText = "Kup teraz",
+                    buttonText = stringResource(Res.string.buy_tickets_card_button),
                     onButtonClick = {
-                        uriHandler.openUri("https://www.mimuw.edu.pl/pl/")
+                        uriHandler.openUri(BUY_TICKETS_URL)
                     }
                 )
             }
