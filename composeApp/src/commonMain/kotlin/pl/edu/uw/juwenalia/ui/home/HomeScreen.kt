@@ -99,9 +99,9 @@ internal fun HomeScreen() {
                 if (homeUiState.news.isNotEmpty()) {
                     item(span = { GridItemSpan(maxLineSpan) }) {
                         NewsGridItem(
-                            title = homeUiState.news.get(0).title,
+                            title = homeUiState.news[0].title,
                             darkTextColor = false,
-                            image = homeUiState.news.get(0).imageFilename,
+                            image = homeUiState.news[0].imageFilename,
                             imageContentDescription = "",
                             onClick = { /* TODO */ }
                         )
