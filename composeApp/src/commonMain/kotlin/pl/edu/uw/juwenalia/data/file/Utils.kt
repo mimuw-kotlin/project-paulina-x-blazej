@@ -7,6 +7,18 @@ import okio.SYSTEM
 
 expect fun getAppFilesDirectory(): String
 
+sealed class Async<out T> {
+    object Loading : Async<Nothing>()
+
+    data class Error(
+        val errorMessage: Int
+    ) : Async<Nothing>()
+
+    data class Success<out T>(
+        val data: T
+    ) : Async<T>()
+}
+
 fun getPath(
     filesDir: String,
     folder: String,

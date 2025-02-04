@@ -26,18 +26,6 @@ private const val FEED_FILENAME: String = "sample_feed.json"
 private const val FEED_VERSION_FILENAME: String = "feed_version.json"
 
 @Serializable
-data class NewsData(
-    val title: String = "",
-    val image: String = ""
-)
-
-@Serializable
-data class ArtistData(
-    val name: String = "",
-    val image: String = ""
-)
-
-@Serializable
 data class FeedData(
     val id: Int = 0,
     val newsData: List<NewsData> = emptyList(),
