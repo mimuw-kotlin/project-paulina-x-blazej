@@ -184,7 +184,7 @@ fun getNews(filesDir: String): List<News> {
             news.imageFilename)
         if (byteArray != null) {
             newsList += News(
-                id = 0, // TODO: add news id to NewsJsonData
+                id = news.id,
                 title = news.title,
                 imageFilename = news.imageFilename,
                 imageByteArray = byteArray
@@ -205,7 +205,7 @@ fun getArtists(filesDir: String): List<Artist> {
             artist.imageFilename)
         if (byteArray != null) {
             artistsList += Artist(
-                id = 0, // TODO: add artist id to ArtistJsonData
+                id = artist.id,
                 name = artist.name,
                 imageFilename = artist.imageFilename,
                 imageByteArray = byteArray
