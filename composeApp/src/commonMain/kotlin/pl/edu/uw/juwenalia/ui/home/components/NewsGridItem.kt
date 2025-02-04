@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.imageResource
+import pl.edu.uw.juwenalia.data.file.getAppFilesDirectory
 import pl.edu.uw.juwenalia.data.file.getFileBytesByName
 
 @Composable
@@ -25,15 +26,11 @@ internal fun NewsGridItem(
     title: String,
     darkTextColor: Boolean,
     imageContentDescription: String,
-    image: DrawableResource? = null,
-    filesDir: String? = null,
-    fileName: String? = null,
+    image: String,
     onClick: () -> Unit
 ) {
     var fileBytes: ByteArray? = null
-    if (filesDir != null && fileName != null) {
-        fileBytes = getFileBytesByName(filesDir, "artist_images", fileName)
-    }
+    fileBytes = getFileBytesByName(getAppFilesDirectory(), "artist_images", image)
 
     Box(
         Modifier.clickable(onClick = onClick)
@@ -48,17 +45,6 @@ internal fun NewsGridItem(
                         .fillMaxWidth()
                         .aspectRatio(1.77f) // 16:9 aspect ratio
                         .clip(shape = RoundedCornerShape(12.dp))
-            )
-        } else if (image != null) {
-            Image(
-                bitmap = imageResource(image),
-                contentDescription = imageContentDescription,
-                modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .aspectRatio(1.77f) // 16:9 aspect ratio
-                        .clip(shape = RoundedCornerShape(12.dp)),
-                contentScale = ContentScale.Crop
             )
         }
 

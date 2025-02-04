@@ -17,16 +17,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import pl.edu.uw.juwenalia.data.file.getAppFilesDirectory
 import pl.edu.uw.juwenalia.data.file.getFileBytesByName
 
 @Composable
 internal fun ArtistListItem(
     name: String,
-    filesDir: String,
-    fileName: String,
+    image: String,
     onClick: () -> Unit
 ) {
-    val fileBytes = getFileBytesByName(filesDir, "artist_images", fileName)
+    val fileBytes = getFileBytesByName(getAppFilesDirectory(), "artist_images", image)
 
     Column(
         modifier = Modifier.width(128.dp).wrapContentHeight().clickable(onClick = onClick),

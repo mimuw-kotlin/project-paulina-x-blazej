@@ -41,6 +41,7 @@ import juweappka.composeapp.generated.resources.sponsor_logo_placeholder
 import juweappka.composeapp.generated.resources.sponsors_and_partners_section_header
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
+import pl.edu.uw.juwenalia.data.file.getAppFilesDirectory
 import pl.edu.uw.juwenalia.ui.common.CardWithAction
 import pl.edu.uw.juwenalia.ui.home.components.ArtistListItem
 import pl.edu.uw.juwenalia.ui.home.components.FeedSectionHeader
@@ -95,14 +96,16 @@ internal fun HomeScreen() {
                     )
                 }
 
-                item(span = { GridItemSpan(maxLineSpan) }) {
-                    NewsGridItem(
-                        title = homeUiState.news.get(0).title,
-                        darkTextColor = false,
-                        image = homeUiState.news.get(0).imageFilename,
-                        imageContentDescription = null,
-                        onClick = { /* TODO */ }
-                    )
+                if (homeUiState.news.isNotEmpty()) {
+                    item(span = { GridItemSpan(maxLineSpan) }) {
+                        NewsGridItem(
+                            title = homeUiState.news.get(0).title,
+                            darkTextColor = false,
+                            image = homeUiState.news.get(0).imageFilename,
+                            imageContentDescription = "",
+                            onClick = { /* TODO */ }
+                        )
+                    }
                 }
 
                 item(span = { GridItemSpan(maxLineSpan) }) {
@@ -122,11 +125,10 @@ internal fun HomeScreen() {
                                 }
                             }
                     ) {
-                        items(artistData.size) { i ->
+                        items(homeUiState.artists.size) { i ->
                             ArtistListItem(
-                                name = artistData[i].name,
-                                filesDir = localFileDir,
-                                fileName = artistData[i].image,
+                                name = homeUiState.artists[i].name,
+                                image = homeUiState.artists[i].imageFilename,
                                 onClick = { /* TODO */ }
                             )
                         }
@@ -178,13 +180,11 @@ internal fun HomeScreen() {
                     FeedSectionHeader(stringResource(Res.string.news_section_header))
                 }
 
-                items(newsData) { news ->
+                items(homeUiState.news) { news ->
                     NewsGridItem(
                         title = news.title,
                         darkTextColor = false,
-                        image = Res.drawable.artist_photo_placeholder,
-                        filesDir = localFileDir,
-                        fileName = news.image,
+                        image = news.imageFilename,
                         imageContentDescription = "Zapowiedź artystów",
                         onClick = { /* TODO */ }
                     )
