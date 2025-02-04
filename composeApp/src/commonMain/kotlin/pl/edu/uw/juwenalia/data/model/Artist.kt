@@ -1,9 +1,8 @@
 package pl.edu.uw.juwenalia.data.model
 
-import kotlinx.serialization.Serializable
-
-@Serializable
 data class Artist(
+    val id: Int,
     val name: String,
-    val imageFilename: String
+    val imageFilename: String,
+    val imageByteArray: ByteArray
 )
