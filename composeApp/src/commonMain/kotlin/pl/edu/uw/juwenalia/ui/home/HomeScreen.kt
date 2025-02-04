@@ -101,7 +101,7 @@ internal fun HomeScreen() {
                         NewsGridItem(
                             title = homeUiState.news[0].title,
                             darkTextColor = false,
-                            image = homeUiState.news[0].imageFilename,
+                            imageBytes = homeUiState.news[0].imageByteArray,
                             imageContentDescription = "",
                             onClick = { /* TODO */ }
                         )
@@ -128,7 +128,7 @@ internal fun HomeScreen() {
                         items(homeUiState.artists.size) { i ->
                             ArtistListItem(
                                 name = homeUiState.artists[i].name,
-                                image = homeUiState.artists[i].imageFilename,
+                                imageBytes = homeUiState.artists[i].imageByteArray,
                                 onClick = { /* TODO */ }
                             )
                         }
@@ -184,7 +184,7 @@ internal fun HomeScreen() {
                     NewsGridItem(
                         title = news.title,
                         darkTextColor = false,
-                        image = news.imageFilename,
+                        imageBytes = news.imageByteArray,
                         imageContentDescription = "Zapowiedź artystów",
                         onClick = { /* TODO */ }
                     )

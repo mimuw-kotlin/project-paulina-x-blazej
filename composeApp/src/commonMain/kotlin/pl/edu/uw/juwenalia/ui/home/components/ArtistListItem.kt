@@ -23,28 +23,25 @@ import pl.edu.uw.juwenalia.data.file.getFileBytesByName
 @Composable
 internal fun ArtistListItem(
     name: String,
-    image: String,
+    imageBytes: ByteArray,
     onClick: () -> Unit
 ) {
-    val fileBytes = getFileBytesByName(getAppFilesDirectory(), "artist_images", image)
 
     Column(
         modifier = Modifier.width(128.dp).wrapContentHeight().clickable(onClick = onClick),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        if (fileBytes != null) {
-            AsyncImage(
-                fileBytes,
-                contentDescription = name,
-                contentScale = ContentScale.Crop,
-                modifier =
-                    Modifier
-                        .padding(bottom = 8.dp)
-                        .fillMaxWidth()
-                        .aspectRatio(1.0f)
-                        .clip(shape = CircleShape)
-            )
-        }
+        AsyncImage(
+            imageBytes,
+            contentDescription = name,
+            contentScale = ContentScale.Crop,
+            modifier =
+                Modifier
+                    .padding(bottom = 8.dp)
+                    .fillMaxWidth()
+                    .aspectRatio(1.0f)
+                    .clip(shape = CircleShape)
+        )
         Text(
             text = name,
             style = MaterialTheme.typography.titleSmall

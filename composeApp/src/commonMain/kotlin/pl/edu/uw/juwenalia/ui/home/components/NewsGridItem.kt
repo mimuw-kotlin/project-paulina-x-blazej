@@ -16,6 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import dev.sargunv.maplibrecompose.expressions.dsl.image
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.imageResource
 import pl.edu.uw.juwenalia.data.file.getAppFilesDirectory
@@ -26,27 +27,23 @@ internal fun NewsGridItem(
     title: String,
     darkTextColor: Boolean,
     imageContentDescription: String,
-    image: String,
+    imageBytes: ByteArray,
     onClick: () -> Unit
 ) {
-    var fileBytes: ByteArray? = null
-    fileBytes = getFileBytesByName(getAppFilesDirectory(), "artist_images", image)
 
     Box(
         Modifier.clickable(onClick = onClick)
     ) {
-        if (fileBytes != null) {
-            AsyncImage(
-                fileBytes,
-                contentDescription = imageContentDescription,
-                contentScale = ContentScale.Crop,
-                modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .aspectRatio(1.77f) // 16:9 aspect ratio
-                        .clip(shape = RoundedCornerShape(12.dp))
-            )
-        }
+        AsyncImage(
+            imageBytes,
+            contentDescription = imageContentDescription,
+            contentScale = ContentScale.Crop,
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(1.77f) // 16:9 aspect ratio
+                    .clip(shape = RoundedCornerShape(12.dp))
+        )
 
         Text(
             text = title,
