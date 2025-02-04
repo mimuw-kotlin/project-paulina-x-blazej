@@ -43,6 +43,8 @@ import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import pl.edu.uw.juwenalia.ui.common.CardGridItem
 import pl.edu.uw.juwenalia.ui.common.CardWithAction
+import pl.edu.uw.juwenalia.ui.tickets.components.NoTicketsEmptyState
+import pl.edu.uw.juwenalia.ui.tickets.components.PhotoItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

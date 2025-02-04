@@ -1,4 +1,4 @@
-package pl.edu.uw.juwenalia.ui.map
+package pl.edu.uw.juwenalia.ui.map.components
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable

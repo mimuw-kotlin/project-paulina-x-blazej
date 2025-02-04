@@ -28,6 +28,7 @@ import juweappka.composeapp.generated.resources.Res
 import juweappka.composeapp.generated.resources.marker
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import pl.edu.uw.juwenalia.ui.map.components.LocationPuck
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable

@@ -43,6 +43,11 @@ import pl.edu.uw.juwenalia.data.file.getAppFilesDirectory
 import pl.edu.uw.juwenalia.data.getArtists
 import pl.edu.uw.juwenalia.data.getNews
 import pl.edu.uw.juwenalia.ui.common.CardWithAction
+import pl.edu.uw.juwenalia.ui.home.components.ArtistListItem
+import pl.edu.uw.juwenalia.ui.home.components.FeedSectionHeader
+import pl.edu.uw.juwenalia.ui.home.components.NewsGridItem
+import pl.edu.uw.juwenalia.ui.home.components.SocialMediaCard
+import pl.edu.uw.juwenalia.ui.home.components.SponsorListItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

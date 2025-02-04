@@ -1,4 +1,4 @@
-package pl.edu.uw.juwenalia.ui.map
+package pl.edu.uw.juwenalia.ui.map.components
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.clickable

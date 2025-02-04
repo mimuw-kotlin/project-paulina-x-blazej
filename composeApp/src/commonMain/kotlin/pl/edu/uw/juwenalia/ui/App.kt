@@ -37,7 +37,7 @@ import pl.edu.uw.juwenalia.data.downloadFeed
 import pl.edu.uw.juwenalia.data.file.getAppFilesDirectory
 import pl.edu.uw.juwenalia.ui.artists.ArtistsScreen
 import pl.edu.uw.juwenalia.ui.home.HomeScreen
-import pl.edu.uw.juwenalia.ui.map.MapScreen
+import pl.edu.uw.juwenalia.ui.map.components.MapScreen
 import pl.edu.uw.juwenalia.ui.theme.AppTheme
 import pl.edu.uw.juwenalia.ui.tickets.TicketsScreen
 

@@ -1,4 +1,4 @@
-package pl.edu.uw.juwenalia.ui.map
+package pl.edu.uw.juwenalia.ui.map.components
 
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -45,6 +45,8 @@ import pl.edu.uw.juwenalia.data.source.StaticMapData.FESTIVAL_PLACE_DEFAULT_ZOOM
 import pl.edu.uw.juwenalia.data.source.StaticMapData.FESTIVAL_PLACE_LATITUDE
 import pl.edu.uw.juwenalia.data.source.StaticMapData.FESTIVAL_PLACE_LONGITUDE
 import pl.edu.uw.juwenalia.data.source.StaticMapData.MAP_POINT_FOCUS_ZOOM
+import pl.edu.uw.juwenalia.ui.map.MapView
+import pl.edu.uw.juwenalia.ui.map.MapViewModel
 import kotlin.time.Duration.Companion.seconds
 
 @OptIn(ExperimentalMaterial3Api::class)

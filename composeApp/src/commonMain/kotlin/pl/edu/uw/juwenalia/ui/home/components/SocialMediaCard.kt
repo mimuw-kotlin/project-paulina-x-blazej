@@ -1,4 +1,4 @@
-package pl.edu.uw.juwenalia.ui.home
+package pl.edu.uw.juwenalia.ui.home.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row

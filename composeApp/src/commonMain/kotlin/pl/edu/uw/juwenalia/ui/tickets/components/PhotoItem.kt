@@ -1,4 +1,4 @@
-package pl.edu.uw.juwenalia.ui.tickets
+package pl.edu.uw.juwenalia.ui.tickets.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
