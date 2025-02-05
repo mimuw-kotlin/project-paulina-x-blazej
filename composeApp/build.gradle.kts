@@ -86,6 +86,9 @@ kotlin {
             implementation(libs.ktor.client.logging)
             implementation(libs.ktor.client.cio)
         }
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
+        }
     }
 }
 
@@ -123,4 +126,8 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+}
+dependencies {
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.junit.jupiter)
 }
