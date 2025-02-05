@@ -52,8 +52,7 @@ private const val INSTAGRAM_URL = "https://www.instagram.com/juwenalia.uw/"
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun HomeScreen() {
-    val homeViewModel = koinViewModel<HomeViewModel>()
+internal fun HomeScreen(homeViewModel: HomeViewModel) {
     val homeUiState by homeViewModel.uiState.collectAsState()
 
     val uriHandler = LocalUriHandler.current

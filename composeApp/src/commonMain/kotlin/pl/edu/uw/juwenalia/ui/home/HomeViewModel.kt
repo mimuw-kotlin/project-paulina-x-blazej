@@ -15,6 +15,7 @@ class HomeViewModel(
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
 
     init {
+        refresh()
         viewModelScope.launch {
             feedRepository.newsStream.collect {
                 _uiState.value = _uiState.value.copy(news = it)

@@ -32,8 +32,10 @@ import juweappka.composeapp.generated.resources.map_nav
 import juweappka.composeapp.generated.resources.tickets_nav
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
 import pl.edu.uw.juwenalia.ui.artists.ArtistsScreen
 import pl.edu.uw.juwenalia.ui.home.HomeScreen
+import pl.edu.uw.juwenalia.ui.home.HomeViewModel
 import pl.edu.uw.juwenalia.ui.map.components.MapScreen
 import pl.edu.uw.juwenalia.ui.tickets.TicketsScreen
 
@@ -55,6 +57,8 @@ internal fun NavGraph(
 ) {
     val currentNavBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = currentNavBackStackEntry?.destination?.route ?: startDestination
+
+    val homeViewModel = koinViewModel<HomeViewModel>()
 
     NavigationSuiteScaffold(
         navigationSuiteItems = {
@@ -92,7 +96,7 @@ internal fun NavGraph(
             exitTransition = { fadeOut(tween(200, easing = FastOutSlowInEasing)) }
         ) {
             composable(TopLevelDestination.HOME.name) {
-                HomeScreen()
+                HomeScreen(homeViewModel)
             }
 
             composable(TopLevelDestination.ARTISTS.name) {

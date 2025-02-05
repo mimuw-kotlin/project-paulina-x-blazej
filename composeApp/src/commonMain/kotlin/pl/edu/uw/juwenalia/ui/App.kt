@@ -12,10 +12,6 @@ fun App(
     dynamicColor: Boolean
 ) {
     KoinContext {
-        LaunchedEffect(Unit) {
-            downloadFeed()
-        }
-
         AppTheme(
             darkTheme = darkTheme,
             dynamicColor = dynamicColor
