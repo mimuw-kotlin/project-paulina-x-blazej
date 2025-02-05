@@ -30,7 +30,7 @@ data class DetailDestination(
 @Composable
 internal fun ArtistsScreen(
     navController: NavHostController = rememberNavController(),
-    startDestination: Any = ListDestination
+    startDestination: Any = ListDestination,
     artistsViewModel: ArtistsViewModel = koinViewModel<ArtistsViewModel>()
 ) {
     val artists by artistsViewModel.artists.collectAsState()
