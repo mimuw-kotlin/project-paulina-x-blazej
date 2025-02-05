@@ -10,7 +10,6 @@ import pl.edu.uw.juwenalia.data.source.FeedRemoteDataSource
 class DefaultFeedRepository(
     private val source: FeedRemoteDataSource
 ) : FeedRepository {
-
     private val _news: MutableStateFlow<List<News>> =
         MutableStateFlow(source.getNews())
     private val _artists: MutableStateFlow<List<Artist>> =
@@ -18,9 +17,9 @@ class DefaultFeedRepository(
     private val _sponsors: MutableStateFlow<List<Sponsor>> =
         MutableStateFlow(source.getSponsors())
 
-    override val newsStream = _news.asStateFlow()
-    override val artistStream = _artists.asStateFlow()
-    override val sponsorStream = _sponsors.asStateFlow()
+    override val news = _news.asStateFlow()
+    override val artists = _artists.asStateFlow()
+    override val sponsors = _sponsors.asStateFlow()
 
     override suspend fun refresh() {
         source.fetchFeed()

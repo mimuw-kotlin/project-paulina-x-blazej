@@ -17,17 +17,17 @@ class HomeViewModel(
     init {
         refresh()
         viewModelScope.launch {
-            feedRepository.newsStream.collect {
+            feedRepository.news.collect {
                 _uiState.value = _uiState.value.copy(news = it)
             }
         }
         viewModelScope.launch {
-            feedRepository.artistStream.collect {
+            feedRepository.artists.collect {
                 _uiState.value = _uiState.value.copy(artists = it)
             }
         }
         viewModelScope.launch {
-            feedRepository.sponsorStream.collect {
+            feedRepository.sponsors.collect {
                 _uiState.value = _uiState.value.copy(sponsors = it)
             }
         }

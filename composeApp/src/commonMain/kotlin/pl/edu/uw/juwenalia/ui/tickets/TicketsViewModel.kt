@@ -24,7 +24,9 @@ class TicketsViewModel(
     }
 
     fun saveTicket(file: PlatformFile) {
-        ticketRepository.saveTicket(file)
+        viewModelScope.launch {
+            ticketRepository.saveTicket(file)
+        }
     }
 
     fun deleteTicket(filename: String) {

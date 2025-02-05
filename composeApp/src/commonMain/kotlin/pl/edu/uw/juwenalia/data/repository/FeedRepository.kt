@@ -6,9 +6,9 @@ import pl.edu.uw.juwenalia.data.model.News
 import pl.edu.uw.juwenalia.data.model.Sponsor
 
 interface FeedRepository {
-    val newsStream: Flow<List<News>>
-    val artistStream: Flow<List<Artist>>
-    val sponsorStream: Flow<List<Sponsor>>
+    val news: Flow<List<News>>
+    val artists: Flow<List<Artist>>
+    val sponsors: Flow<List<Sponsor>>
 
     suspend fun refresh()
 }

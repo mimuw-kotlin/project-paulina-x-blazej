@@ -1,12 +1,11 @@
 package pl.edu.uw.juwenalia.data.repository
 
 import io.github.vinceglb.filekit.core.PlatformFile
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import pl.edu.uw.juwenalia.data.file.deleteFile
 import pl.edu.uw.juwenalia.data.file.getFileBytesByName
 import pl.edu.uw.juwenalia.data.file.getFiles
@@ -15,13 +14,12 @@ import pl.edu.uw.juwenalia.data.file.savePickedFile
 private const val TICKETS_FOLDER_NAME = "ticket_resources"
 
 class DefaultTicketRepository : TicketRepository {
-
     private val _tickets: MutableStateFlow<List<String>> =
         MutableStateFlow(getFiles(TICKETS_FOLDER_NAME))
     override val tickets = _tickets.asStateFlow()
 
-    override fun saveTicket(file: PlatformFile) {
-        CoroutineScope(Dispatchers.IO).launch {
+    override suspend fun saveTicket(file: PlatformFile) {
+        withContext(Dispatchers.IO) {
             savePickedFile(TICKETS_FOLDER_NAME, file)
             updateTickets()
         }

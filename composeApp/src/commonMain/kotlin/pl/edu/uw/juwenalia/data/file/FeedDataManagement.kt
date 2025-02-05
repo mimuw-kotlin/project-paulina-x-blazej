@@ -54,22 +54,18 @@ fun saveCurrentFeedVersion() {
 }
 
 // If previous version of feed has a different id or is not recorded, return false
-fun compareFeedVersions(
-    currId: Int
-): Boolean {
+fun compareFeedVersions(currId: Int): Boolean {
     if (!checkFileExistence(JSON_FOLDER, FEED_VERSION_FILENAME)) return false
-    val feedVersionString = getJsonString(JSON_FOLDER, FEED_VERSION_FILENAME)
+    val feedVersionString = getJsonString(JSON_FOLDER, FEED_VERSION_FILENAME) ?: return true
 
-    if (feedVersionString == null) return true
     val feedVersionData: FeedVersionData = json.decodeFromString(feedVersionString)
 
-    if (feedVersionData.id == currId) return true
-    return false
+    return feedVersionData.id == currId
 }
 
 // Download feed info and return download status
 suspend fun downloadFeed(): Boolean {
-    // before download, save current version id (if exists)
+    // before download, save the current version id (if exists)
     saveCurrentFeedVersion()
 
     val url = "$FEED_SOURCE_URL/$REMOTE_HOME_FOLDER/$JSON_FOLDER/$FEED_FILENAME"
@@ -124,27 +120,25 @@ suspend fun downloadFile(
 }
 
 // Download all pictures necessary to generate feed
-suspend fun downloadAllPictures(
-    feedData: FeedData
-) {
+suspend fun downloadAllPictures(feedData: FeedData) {
     feedData.newsData.forEach { news ->
         val url = "$FEED_SOURCE_URL/$REMOTE_HOME_FOLDER/$REMOTE_IMAGES_FOLDER/${news.imageFilename}"
         downloadFile(NEWS_IMAGES_FOLDER, news.imageFilename, url)
     }
     feedData.artistData.forEach { artist ->
-        val url = "$FEED_SOURCE_URL/$REMOTE_HOME_FOLDER/$REMOTE_IMAGES_FOLDER/${artist.imageFilename}"
+        val url =
+            "$FEED_SOURCE_URL/$REMOTE_HOME_FOLDER/$REMOTE_IMAGES_FOLDER/${artist.imageFilename}"
         downloadFile(ARTIST_IMAGES_FOLDER, artist.imageFilename, url)
     }
     feedData.sponsorsData.forEach { sponsor ->
-        val url = "$FEED_SOURCE_URL/$REMOTE_HOME_FOLDER/$REMOTE_IMAGES_FOLDER/${sponsor.imageFilename}"
+        val url =
+            "$FEED_SOURCE_URL/$REMOTE_HOME_FOLDER/$REMOTE_IMAGES_FOLDER/${sponsor.imageFilename}"
         downloadFile(SPONSOR_IMAGES_FOLDER, sponsor.imageFilename, url)
     }
 }
 
 // Delete redundant pictures
-fun deleteRedundantPictures(
-    feedData: FeedData
-) {
+fun deleteRedundantPictures(feedData: FeedData) {
     val neededImages: MutableSet<String> = emptySet<String>().toMutableSet()
     feedData.newsData.forEach { news -> neededImages += news.imageFilename }
     feedData.artistData.forEach { artist -> neededImages += artist.imageFilename }
@@ -163,7 +157,7 @@ fun deleteRedundantPictures(
             deleteFile(NEWS_IMAGES_FOLDER, image)
         }
     }
-    allNewsImages.forEach { sponsor ->
+    allSponsorImages.forEach { sponsor ->
         if (!neededImages.contains(sponsor)) {
             deleteFile(SPONSOR_IMAGES_FOLDER, sponsor)
         }

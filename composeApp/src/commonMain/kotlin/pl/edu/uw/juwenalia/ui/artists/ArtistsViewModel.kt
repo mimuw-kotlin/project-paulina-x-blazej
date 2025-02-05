@@ -12,16 +12,14 @@ import pl.edu.uw.juwenalia.data.repository.FeedRepository
 class ArtistsViewModel(
     private val feedRepository: FeedRepository
 ) : ViewModel() {
-
     private val _artists = MutableStateFlow(emptyList<Artist>())
     val artists: StateFlow<List<Artist>> = _artists.asStateFlow()
 
     init {
         viewModelScope.launch {
-            feedRepository.artistStream.collect {
+            feedRepository.artists.collect {
                 _artists.value = it
             }
         }
     }
-
 }

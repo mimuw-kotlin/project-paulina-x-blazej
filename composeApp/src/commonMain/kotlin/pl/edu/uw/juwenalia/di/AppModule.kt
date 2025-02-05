@@ -5,15 +5,15 @@ import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
-import pl.edu.uw.juwenalia.data.repository.DefaultMapPointRepository
 import pl.edu.uw.juwenalia.data.repository.DefaultFeedRepository
+import pl.edu.uw.juwenalia.data.repository.DefaultMapPointRepository
 import pl.edu.uw.juwenalia.data.repository.DefaultTicketRepository
-import pl.edu.uw.juwenalia.data.repository.MapPointRepository
 import pl.edu.uw.juwenalia.data.repository.FeedRepository
+import pl.edu.uw.juwenalia.data.repository.MapPointRepository
 import pl.edu.uw.juwenalia.data.repository.TicketRepository
-import pl.edu.uw.juwenalia.ui.artists.ArtistsViewModel
 import pl.edu.uw.juwenalia.data.source.DefaultFeedRemoteDataSource
 import pl.edu.uw.juwenalia.data.source.FeedRemoteDataSource
+import pl.edu.uw.juwenalia.ui.artists.ArtistsViewModel
 import pl.edu.uw.juwenalia.ui.home.HomeViewModel
 import pl.edu.uw.juwenalia.ui.map.MapViewModel
 import pl.edu.uw.juwenalia.ui.tickets.TicketsViewModel
@@ -24,7 +24,7 @@ val appModule =
         single { Geolocator() }
 
         // Data sources
-        singleOf(::DefaultFeedRemoteDataSource) {bind<FeedRemoteDataSource>()}
+        singleOf(::DefaultFeedRemoteDataSource) { bind<FeedRemoteDataSource>() }
 
         // Repositories
         singleOf(::DefaultFeedRepository) { bind<FeedRepository>() }
