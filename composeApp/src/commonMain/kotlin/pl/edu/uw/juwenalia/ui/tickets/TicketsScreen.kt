@@ -54,8 +54,7 @@ private const val BUY_TICKETS_URL = "https://www.mimuw.edu.pl/pl/"
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun TicketsScreen() {
-    val ticketsViewModel = koinViewModel<TicketsViewModel>()
+internal fun TicketsScreen(ticketsViewModel: TicketsViewModel = koinViewModel<TicketsViewModel>()) {
     val ticketsUiState by ticketsViewModel.uiState.collectAsState()
 
     val uriHandler = LocalUriHandler.current

@@ -14,6 +14,7 @@ import juweappka.composeapp.generated.resources.Res
 import juweappka.composeapp.generated.resources.app_name
 import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
 import pl.edu.uw.juwenalia.ui.common.ArtistDetail
 import pl.edu.uw.juwenalia.ui.home.components.Feed
 import pl.edu.uw.juwenalia.ui.home.components.NewsDetail
@@ -34,7 +35,7 @@ data class ArtistDetailDestination(
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 internal fun HomeScreen(
-    homeViewModel: HomeViewModel,
+    homeViewModel: HomeViewModel = koinViewModel<HomeViewModel>(),
     navController: NavHostController = rememberNavController(),
     startDestination: Any = FeedDestination
 ) {

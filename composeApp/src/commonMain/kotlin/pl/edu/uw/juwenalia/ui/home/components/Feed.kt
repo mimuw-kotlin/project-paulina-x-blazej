@@ -106,7 +106,6 @@ internal fun Feed(
                     ) {
                         NewsGridItem(
                             news = news[0],
-                            darkTextColor = news[0].isDarkText,
                             imageContentDescription = news[0].title,
                             sharedTransitionScope = sharedTransitionScope,
                             animatedContentScope = animatedContentScope,
@@ -231,7 +230,6 @@ internal fun Feed(
                     ) {
                         NewsGridItem(
                             news = it,
-                            darkTextColor = it.isDarkText,
                             imageContentDescription = it.title,
                             sharedTransitionScope = sharedTransitionScope,
                             animatedContentScope = animatedContentScope,

@@ -3,7 +3,6 @@ package pl.edu.uw.juwenalia.ui.home.components
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,7 +24,6 @@ import pl.edu.uw.juwenalia.data.model.News
 @Composable
 internal fun NewsGridItem(
     news: News,
-    darkTextColor: Boolean,
     imageContentDescription: String,
     sharedTransitionScope: SharedTransitionScope,
     animatedContentScope: AnimatedContentScope,
@@ -68,12 +66,6 @@ internal fun NewsGridItem(
                 Text(
                     text = news.title,
                     style = MaterialTheme.typography.titleLarge,
-                    color =
-                        if (darkTextColor && !isSystemInDarkTheme()) {
-                            MaterialTheme.colorScheme.onSurface
-                        } else {
-                            MaterialTheme.colorScheme.inverseOnSurface
-                        },
                     modifier =
                         Modifier
                             .padding(horizontal = 8.dp, vertical = 4.dp)
