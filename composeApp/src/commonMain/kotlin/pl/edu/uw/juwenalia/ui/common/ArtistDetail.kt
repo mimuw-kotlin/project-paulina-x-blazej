@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import juweappka.composeapp.generated.resources.Res
@@ -69,6 +70,7 @@ internal fun ArtistDetail(
                     .fillMaxSize()
                     .consumeWindowInsets(innerPadding)
                     .padding(innerPadding)
+                    .testTag("artistDetail-${artist.id}")
         ) {
             AsyncImage(
                 artist.imageByteArray,
