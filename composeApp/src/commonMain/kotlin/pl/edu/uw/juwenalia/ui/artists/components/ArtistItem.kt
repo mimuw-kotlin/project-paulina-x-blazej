@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import pl.edu.uw.juwenalia.data.model.Artist
@@ -52,6 +53,7 @@ internal fun ArtistItem(
                         .fillMaxWidth()
                         .aspectRatio(1.0f)
                         .clip(shape = RoundedCornerShape(12.dp))
+                        .testTag("artistItem-${artist.id}")
             )
             Text(
                 text = artist.name,
