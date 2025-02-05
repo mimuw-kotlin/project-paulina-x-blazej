@@ -13,22 +13,24 @@ coilCompose = "3.0.4"
 compass = "2.0.0"
 compose-multiplatform = "1.7.3"
 filekitCore = "0.8.8"
-junitJupiter = "5.8.1"
 koin = "4.0.2"
 kotlin = "2.1.10"
-kotlinTest = "2.1.0"
 kotlinxSerializationJson = "1.8.0"
 ktorClientCio = "2.3.0"
+#noinspection GradleDependency
 ktorClientCore = "2.3.7"
 ktorClientJson = "2.2.4"
 navigationCompose = "2.8.0-alpha11"
 okio = "3.10.2"
+uiTestJunit4Android = "1.7.7"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 androidx-animation-android = { group = "androidx.compose.animation", name = "animation-android", version.ref = "animationAndroid" }
 androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
+androidx-ui-test-junit4-android = { module = "androidx.compose.ui:ui-test-junit4-android", version.ref = "uiTestJunit4Android" }
+androidx-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "uiTestJunit4Android" }
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilCompose" }
 compass-geolocation = { module = "dev.jordond.compass:geolocation", version.ref = "compass" }
 compass-geolocation-mobile = { module = "dev.jordond.compass:geolocation-mobile", version.ref = "compass" }
