@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 interface TicketRepository {
     val tickets: Flow<List<String>>
 
-    suspend fun saveTicket(file: PlatformFile)
+    suspend fun saveTicket(file: PlatformFile?)
 
     fun getTicketBytes(filename: String): ByteArray?
 

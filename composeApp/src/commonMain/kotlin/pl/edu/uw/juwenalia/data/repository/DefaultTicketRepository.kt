@@ -18,7 +18,8 @@ class DefaultTicketRepository : TicketRepository {
         MutableStateFlow(getFiles(TICKETS_FOLDER_NAME))
     override val tickets = _tickets.asStateFlow()
 
-    override suspend fun saveTicket(file: PlatformFile) {
+    override suspend fun saveTicket(file: PlatformFile?) {
+        if (file == null) return
         withContext(Dispatchers.IO) {
             savePickedFile(TICKETS_FOLDER_NAME, file)
             updateTickets()

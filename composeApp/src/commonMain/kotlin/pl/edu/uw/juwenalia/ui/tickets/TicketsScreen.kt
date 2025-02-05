@@ -28,6 +28,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import io.github.vinceglb.filekit.compose.rememberFilePickerLauncher
 import io.github.vinceglb.filekit.core.PickerType
@@ -156,7 +157,8 @@ internal fun TicketsScreen(ticketsViewModel: TicketsViewModel = koinViewModel<Ti
     if (ticketsUiState.openedTicketFilename != null) {
         ModalBottomSheet(
             onDismissRequest = { ticketsViewModel.dismissTicket() },
-            sheetState = sheetState
+            sheetState = sheetState,
+            modifier = Modifier.testTag("ticket_modal")
         ) {
             PhotoItem(ticketsUiState.openedTicketBytes, ticketsUiState.openedTicketFilename!!)
         }

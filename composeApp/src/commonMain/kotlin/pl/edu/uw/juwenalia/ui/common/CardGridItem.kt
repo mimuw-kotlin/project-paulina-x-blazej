@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.imageResource
@@ -39,7 +40,7 @@ fun CardGridItem(
             .wrapContentHeight()
 ) {
     OutlinedCard(
-        modifier = modifier.clickable(onClick = onCardClick),
+        modifier = modifier.clickable(onClick = onCardClick).testTag("ticket_card"),
         shape = RoundedCornerShape(12.dp)
     ) {
         Box {
@@ -63,7 +64,11 @@ fun CardGridItem(
             }
             FilledIconButton(
                 onClick = onButtonClick,
-                modifier = Modifier.align(Alignment.TopEnd).padding(8.dp)
+                modifier =
+                    Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(8.dp)
+                        .testTag("ticket_remove_button")
             ) {
                 Icon(
                     imageVector = buttonIcon,

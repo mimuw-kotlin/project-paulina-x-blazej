@@ -23,7 +23,7 @@ class TicketsViewModel(
         }
     }
 
-    fun saveTicket(file: PlatformFile) {
+    fun saveTicket(file: PlatformFile?) {
         viewModelScope.launch {
             ticketRepository.saveTicket(file)
         }
