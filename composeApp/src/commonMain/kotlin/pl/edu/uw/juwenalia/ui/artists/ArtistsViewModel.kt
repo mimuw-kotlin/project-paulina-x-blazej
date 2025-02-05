@@ -1,25 +1,27 @@
 package pl.edu.uw.juwenalia.ui.artists
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import pl.edu.uw.juwenalia.data.model.Artist
+import pl.edu.uw.juwenalia.data.repository.FeedRepository
 
-class ArtistsViewModel : ViewModel() {
-    private val tempArtistList =
-        List(10) {
-            Artist(
-                id = it,
-                name = "Dawid Podsiadło $it",
-                imageFilename = "dawid.jpg",
-                description = "",
-                imageByteArray = ByteArray(0)
-            )
-        }
+class ArtistsViewModel(
+    private val feedRepository: FeedRepository
+) : ViewModel() {
 
-    private val _artists = MutableStateFlow(tempArtistList)
+    private val _artists = MutableStateFlow(emptyList<Artist>())
     val artists: StateFlow<List<Artist>> = _artists.asStateFlow()
 
-    // TODO: add fetching artists
+    init {
+        viewModelScope.launch {
+            feedRepository.artistStream.collect {
+                _artists.value = it
+            }
+        }
+    }
+
 }

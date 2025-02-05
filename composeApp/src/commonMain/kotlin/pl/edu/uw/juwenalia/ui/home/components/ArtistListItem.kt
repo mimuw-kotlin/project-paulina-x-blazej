@@ -31,7 +31,7 @@ internal fun ArtistListItem(
     ) {
         AsyncImage(
             artist.imageByteArray,
-            contentDescription =artist.name,
+            contentDescription = artist.name,
             contentScale = ContentScale.Crop,
             modifier =
                 Modifier

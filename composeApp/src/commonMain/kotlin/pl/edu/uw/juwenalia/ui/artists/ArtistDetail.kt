@@ -32,11 +32,10 @@ import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
 import juweappka.composeapp.generated.resources.Res
-import juweappka.composeapp.generated.resources.artist_photo_placeholder
 import juweappka.composeapp.generated.resources.artists_title
 import juweappka.composeapp.generated.resources.back
-import org.jetbrains.compose.resources.imageResource
 import org.jetbrains.compose.resources.stringResource
 import pl.edu.uw.juwenalia.data.model.Artist
 
@@ -72,8 +71,8 @@ internal fun ArtistDetailScreen(
                     .consumeWindowInsets(innerPadding)
                     .padding(innerPadding)
         ) {
-            Image(
-                imageResource(Res.drawable.artist_photo_placeholder),
+            AsyncImage(
+                artist.imageByteArray,
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier =
@@ -92,8 +91,8 @@ internal fun ArtistDetailScreen(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 with(sharedTransitionScope) {
-                    Image(
-                        imageResource(Res.drawable.artist_photo_placeholder),
+                    AsyncImage(
+                        artist.imageByteArray,
                         contentDescription = artist.name,
                         contentScale = ContentScale.Crop,
                         modifier =
@@ -127,11 +126,7 @@ internal fun ArtistDetailScreen(
                     modifier = Modifier.padding(horizontal = 16.dp)
                 ) {
                     Text(
-                        text =
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non" +
-                                " risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing" +
-                                " nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas" +
-                                " ligula massa, varius a, semper congue, euismod non, mi.",
+                        text = artist.description,
                         style = MaterialTheme.typography.bodyMedium,
                         modifier = Modifier.padding(top = 8.dp)
                     )

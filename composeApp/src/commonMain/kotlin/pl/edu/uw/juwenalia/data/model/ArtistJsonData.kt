@@ -7,6 +7,8 @@ data class ArtistJsonData(
     val id: Int = 0,
     val name: String = "",
     val imageFilename: String = "",
-    val description: String = ""
+    val description: String = "",
+    val day: Int = 1,
+    val time: String = ""
 )
 

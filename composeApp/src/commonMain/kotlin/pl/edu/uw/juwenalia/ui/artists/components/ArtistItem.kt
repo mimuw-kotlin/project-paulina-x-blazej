@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
 import juweappka.composeapp.generated.resources.Res
 import juweappka.composeapp.generated.resources.artist_photo_placeholder
 import org.jetbrains.compose.resources.imageResource
@@ -40,8 +41,8 @@ internal fun ArtistItem(
                 .clickable(onClick = onClick)
     ) {
         with(sharedTransitionScope) {
-            Image(
-                imageResource(Res.drawable.artist_photo_placeholder),
+            AsyncImage(
+                artist.imageByteArray,
                 contentDescription = artist.name,
                 contentScale = ContentScale.Crop,
                 modifier =
@@ -70,7 +71,7 @@ internal fun ArtistItem(
             )
         }
         Text(
-            text = "20:00",
+            text = artist.time,
             style = MaterialTheme.typography.bodyMedium
         )
     }

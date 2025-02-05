@@ -9,6 +9,7 @@ import pl.edu.uw.juwenalia.data.file.getFileBytesByName
 import pl.edu.uw.juwenalia.data.model.Artist
 import pl.edu.uw.juwenalia.data.model.News
 import pl.edu.uw.juwenalia.data.model.Sponsor
+import kotlin.comparisons.thenBy
 
 class DefaultFeedRemoteDataSource() : FeedRemoteDataSource {
     override suspend fun fetchFeed() {
@@ -32,12 +33,17 @@ class DefaultFeedRemoteDataSource() : FeedRemoteDataSource {
                 )
             }
         }
-        return newsList.sortedByDescending { it.id }
+
+        val newNewsList = newsList.sortedByDescending { it.id }
+        newNewsList.forEachIndexed {i, news ->
+            news.id = i
+        }
+        return newNewsList
     }
 
     override fun getArtists(): List<Artist> {
         val artistsJsonData = getFeedData().artistData
-        val artistsList = emptyList<Artist>().toMutableList()
+        var artistsList = emptyList<Artist>().toMutableList()
         artistsJsonData.forEach { artist ->
             val byteArray = getFileBytesByName(
                 ARTIST_IMAGES_FOLDER,
@@ -48,11 +54,21 @@ class DefaultFeedRemoteDataSource() : FeedRemoteDataSource {
                     name = artist.name,
                     imageFilename = artist.imageFilename,
                     description = artist.description,
+                    day = artist.day,
+                    time = artist.time,
                     imageByteArray = byteArray
                 )
             }
         }
-        return artistsList.sortedByDescending { it.id }
+
+        val newArtistsList = artistsList.sortedWith(
+            compareBy<Artist> {it.day}
+                .thenBy { it.time }
+        )
+        newArtistsList.forEachIndexed { i, artist ->
+            artist.id = i
+        }
+        return newArtistsList
     }
 
     override fun getSponsors(): List<Sponsor> {
@@ -72,7 +88,12 @@ class DefaultFeedRemoteDataSource() : FeedRemoteDataSource {
                 )
             }
         }
-        return sponsorsList.sortedByDescending { it.id }
+
+        val newSponsorsList = sponsorsList.sortedBy { it.id }
+        newSponsorsList.forEachIndexed{i, sponsor ->
+            sponsor.id = i
+        }
+        return newSponsorsList
     }
 
 }

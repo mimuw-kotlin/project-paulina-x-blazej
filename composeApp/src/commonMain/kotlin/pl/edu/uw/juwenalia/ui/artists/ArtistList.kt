@@ -33,6 +33,7 @@ import org.jetbrains.compose.resources.stringResource
 import pl.edu.uw.juwenalia.data.model.Artist
 import pl.edu.uw.juwenalia.ui.artists.components.ArtistItem
 import pl.edu.uw.juwenalia.ui.artists.components.ArtistsSectionHeader
+import kotlin.math.min
 
 @OptIn(ExperimentalSharedTransitionApi::class, ExperimentalMaterial3Api::class)
 @Composable
@@ -74,7 +75,7 @@ fun ArtistList(
                 )
             }
 
-            items(artists.subList(0, 5)) {
+            items(artists.filter { it.day == 1 }) {
                 ArtistItem(
                     artist = it,
                     onClick = { onArtistClick(it) },
@@ -104,7 +105,7 @@ fun ArtistList(
                 )
             }
 
-            items(artists.subList(5, artists.size)) {
+            items(artists.filter { it.day == 2 }) {
                 ArtistItem(
                     artist = it,
                     onClick = { onArtistClick(it) },
