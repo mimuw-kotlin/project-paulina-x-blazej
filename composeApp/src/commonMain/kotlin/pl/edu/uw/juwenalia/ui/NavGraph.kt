@@ -36,7 +36,7 @@ import org.koin.compose.viewmodel.koinViewModel
 import pl.edu.uw.juwenalia.ui.artists.ArtistsScreen
 import pl.edu.uw.juwenalia.ui.home.HomeScreen
 import pl.edu.uw.juwenalia.ui.home.HomeViewModel
-import pl.edu.uw.juwenalia.ui.map.components.MapScreen
+import pl.edu.uw.juwenalia.ui.map.MapScreen
 import pl.edu.uw.juwenalia.ui.tickets.TicketsScreen
 
 enum class TopLevelDestination(

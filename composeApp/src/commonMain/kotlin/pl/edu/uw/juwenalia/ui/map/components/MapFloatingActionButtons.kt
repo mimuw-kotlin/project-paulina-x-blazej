@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Place
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -45,11 +46,15 @@ fun MapFloatingActionButtons(
             horizontalAlignment = Alignment.End
         ) {
             DisappearingCompassButton(
-                cameraState = cameraState
+                cameraState = cameraState,
+                colors =
+                    ButtonDefaults.elevatedButtonColors(
+                        containerColor = MaterialTheme.colorScheme.surfaceBright
+                    )
             )
             SmallFloatingActionButton(
                 onClick = onFixGpsClick,
-                containerColor = MaterialTheme.colorScheme.surfaceContainer,
+                containerColor = MaterialTheme.colorScheme.surfaceBright,
                 contentColor = MaterialTheme.colorScheme.onSurface,
                 content = fixGpsButtonIcon
             )

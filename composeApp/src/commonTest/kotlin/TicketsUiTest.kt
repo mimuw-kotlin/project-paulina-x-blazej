@@ -14,14 +14,11 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.runComposeUiTest
 import kotlin.test.Test
 
-class ExampleTest {
+class TicketsUiTest {
     @OptIn(ExperimentalTestApi::class)
     @Test
-    fun myTest() =
+    fun `test adding and deleting tickets`() =
         runComposeUiTest {
-            // Declares a mock UI to demonstrate API calls
-            //
-            // Replace with your own declarations to test the code of your project
             setContent {
                 var text by remember { mutableStateOf("Hello") }
                 Text(

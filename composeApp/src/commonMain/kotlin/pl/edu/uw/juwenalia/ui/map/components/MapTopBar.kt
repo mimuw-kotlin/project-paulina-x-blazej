@@ -12,6 +12,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
@@ -69,6 +70,10 @@ fun MapTopBar(
                         ListItem(
                             modifier =
                                 Modifier.clickable { onSearchResultClick(mapPoint) },
+                            colors =
+                                ListItemDefaults.colors(
+                                    containerColor = MaterialTheme.colorScheme.surfaceBright
+                                ),
                             headlineContent = { Text(mapPoint.name) },
                             supportingContent =
                                 mapPoint.additionalInfo?.let {
