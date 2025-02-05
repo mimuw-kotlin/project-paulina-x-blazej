@@ -12,10 +12,9 @@ import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
-import pl.edu.uw.juwenalia.data.model.Artist
 import pl.edu.uw.juwenalia.data.model.ArtistJsonData
-import pl.edu.uw.juwenalia.data.model.News
 import pl.edu.uw.juwenalia.data.model.NewsJsonData
+import pl.edu.uw.juwenalia.data.model.SponsorsJsonData
 
 private const val FEED_SOURCE_URL: String = "https://c00kiepreferences.github.io/JuweFeed"
 private const val REMOTE_HOME_FOLDER: String = "Feed"
@@ -23,15 +22,17 @@ private const val JSON_FOLDER: String = "Json"
 private const val REMOTE_IMAGES_FOLDER: String = "Pictures"
 private const val FEED_FILENAME: String = "feed.json"
 private const val FEED_VERSION_FILENAME: String = "feed_version.json"
-private const val ARTIST_IMAGES_FOLDER: String = "artist_images"
-private const val NEWS_IMAGES_FOLDER: String = "news_images"
+const val ARTIST_IMAGES_FOLDER: String = "artist_images"
+const val NEWS_IMAGES_FOLDER: String = "news_images"
+const val SPONSOR_IMAGES_FOLDER: String = "sponsor_images"
 private val json = Json { ignoreUnknownKeys = true }
 
 @Serializable
 data class FeedData(
     val id: Int = 0,
     val newsData: List<NewsJsonData> = emptyList(),
-    val artistData: List<ArtistJsonData> = emptyList()
+    val artistData: List<ArtistJsonData> = emptyList(),
+    val sponsorsData: List<SponsorsJsonData> = emptyList()
 )
 
 @Serializable
@@ -134,6 +135,10 @@ suspend fun downloadAllPictures(
         val url = "$FEED_SOURCE_URL/$REMOTE_HOME_FOLDER/$REMOTE_IMAGES_FOLDER/${artist.imageFilename}"
         downloadFile(ARTIST_IMAGES_FOLDER, artist.imageFilename, url)
     }
+    feedData.sponsorsData.forEach { sponsor ->
+        val url = "$FEED_SOURCE_URL/$REMOTE_HOME_FOLDER/$REMOTE_IMAGES_FOLDER/${sponsor.imageFilename}"
+        downloadFile(SPONSOR_IMAGES_FOLDER, sponsor.imageFilename, url)
+    }
 }
 
 // Delete redundant pictures
@@ -143,8 +148,10 @@ fun deleteRedundantPictures(
     val neededImages: MutableSet<String> = emptySet<String>().toMutableSet()
     feedData.newsData.forEach { news -> neededImages += news.imageFilename }
     feedData.artistData.forEach { artist -> neededImages += artist.imageFilename }
+    feedData.sponsorsData.forEach { sponsor -> neededImages += sponsor.imageFilename }
     val allArtistImages = getFiles(ARTIST_IMAGES_FOLDER)
     val allNewsImages = getFiles(NEWS_IMAGES_FOLDER)
+    val allSponsorImages = getFiles(SPONSOR_IMAGES_FOLDER)
 
     allArtistImages.forEach { image ->
         if (!neededImages.contains(image)) {
@@ -154,6 +161,11 @@ fun deleteRedundantPictures(
     allNewsImages.forEach { image ->
         if (!neededImages.contains(image)) {
             deleteFile(NEWS_IMAGES_FOLDER, image)
+        }
+    }
+    allNewsImages.forEach { sponsor ->
+        if (!neededImages.contains(sponsor)) {
+            deleteFile(SPONSOR_IMAGES_FOLDER, sponsor)
         }
     }
 }
@@ -168,44 +180,4 @@ fun getFeedData(): FeedData {
     } else {
         FeedData()
     }
-}
-
-// return list of all news with loaded images, sorted by id (descending)
-fun getNews(): List<News> {
-    val newsJsonData = getFeedData().newsData
-    val newsList = emptyList<News>().toMutableList()
-    newsJsonData.forEach { news ->
-        val byteArray = getFileBytesByName(
-            NEWS_IMAGES_FOLDER,
-            news.imageFilename)
-        if (byteArray != null) {
-            newsList += News(
-                id = news.id,
-                title = news.title,
-                imageFilename = news.imageFilename,
-                imageByteArray = byteArray
-            )
-        }
-    }
-    return newsList.sortedByDescending { it.id }
-}
-
-// return list of all artists with loaded images, sorted by id (descending)
-fun getArtists(): List<Artist> {
-    val artistsJsonData = getFeedData().artistData
-    val artistsList = emptyList<Artist>().toMutableList()
-    artistsJsonData.forEach { artist ->
-        val byteArray = getFileBytesByName(
-            ARTIST_IMAGES_FOLDER,
-            artist.imageFilename)
-        if (byteArray != null) {
-            artistsList += Artist(
-                id = artist.id,
-                name = artist.name,
-                imageFilename = artist.imageFilename,
-                imageByteArray = byteArray
-            )
-        }
-    }
-    return artistsList.sortedByDescending { it.id }
 }

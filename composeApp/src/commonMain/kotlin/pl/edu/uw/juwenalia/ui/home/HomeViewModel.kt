@@ -25,6 +25,11 @@ class HomeViewModel(
                 _uiState.value = _uiState.value.copy(artists = it)
             }
         }
+        viewModelScope.launch {
+            feedRepository.sponsorStream.collect {
+                _uiState.value = _uiState.value.copy(sponsors = it)
+            }
+        }
     }
 
     fun refresh() {

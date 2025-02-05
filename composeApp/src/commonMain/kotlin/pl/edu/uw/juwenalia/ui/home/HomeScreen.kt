@@ -21,7 +21,6 @@ import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalDensity
@@ -30,7 +29,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.offset
 import juweappka.composeapp.generated.resources.Res
 import juweappka.composeapp.generated.resources.app_name
-import juweappka.composeapp.generated.resources.artist_photo_placeholder
 import juweappka.composeapp.generated.resources.artists_section_header
 import juweappka.composeapp.generated.resources.main_card_body
 import juweappka.composeapp.generated.resources.main_card_button
@@ -163,10 +161,9 @@ internal fun HomeScreen() {
                                 }
                             }
                     ) {
-                        items(10) {
+                        items(homeUiState.sponsors.size) { i ->
                             SponsorListItem(
-                                name = "Perła",
-                                image = Res.drawable.sponsor_logo_placeholder,
+                                sponsor = homeUiState.sponsors[i],
                                 onClick = { /* TODO */ }
                             )
                         }
