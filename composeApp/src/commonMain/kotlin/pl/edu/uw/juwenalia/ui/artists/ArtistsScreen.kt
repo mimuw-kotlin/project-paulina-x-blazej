@@ -2,7 +2,6 @@ package pl.edu.uw.juwenalia.ui.artists
 
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -22,7 +21,7 @@ data class DetailDestination(
     val id: Int
 )
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 internal fun ArtistsScreen(
     navController: NavHostController = rememberNavController(),
