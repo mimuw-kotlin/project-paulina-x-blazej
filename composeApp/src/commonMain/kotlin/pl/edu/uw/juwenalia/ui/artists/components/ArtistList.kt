@@ -1,4 +1,4 @@
-package pl.edu.uw.juwenalia.ui.artists
+package pl.edu.uw.juwenalia.ui.artists.components
 
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
@@ -31,13 +31,10 @@ import juweappka.composeapp.generated.resources.may_9
 import juweappka.composeapp.generated.resources.saturday
 import org.jetbrains.compose.resources.stringResource
 import pl.edu.uw.juwenalia.data.model.Artist
-import pl.edu.uw.juwenalia.ui.artists.components.ArtistItem
-import pl.edu.uw.juwenalia.ui.artists.components.ArtistsSectionHeader
-import kotlin.math.min
 
 @OptIn(ExperimentalSharedTransitionApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun ArtistList(
+internal fun ArtistList(
     artists: List<Artist>,
     onArtistClick: (Artist) -> Unit,
     sharedTransitionScope: SharedTransitionScope,

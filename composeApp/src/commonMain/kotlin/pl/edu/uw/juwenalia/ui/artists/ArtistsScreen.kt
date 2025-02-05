@@ -10,8 +10,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import juweappka.composeapp.generated.resources.Res
+import juweappka.composeapp.generated.resources.artists_title
 import kotlinx.serialization.Serializable
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
+import pl.edu.uw.juwenalia.ui.artists.components.ArtistList
+import pl.edu.uw.juwenalia.ui.common.ArtistDetail
 
 @Serializable
 object ListDestination
@@ -46,9 +51,10 @@ internal fun ArtistsScreen(
                 )
             }
             composable<DetailDestination> { backStackEntry ->
-                val detailDestination: DetailDestination = backStackEntry.toRoute()
-                ArtistDetailScreen(
-                    artist = artists[detailDestination.id],
+                val destination: DetailDestination = backStackEntry.toRoute()
+                ArtistDetail(
+                    artist = artists[destination.id],
+                    topBarTitle = stringResource(Res.string.artists_title),
                     onBackClick = { navController.popBackStack() },
                     sharedTransitionScope = this@SharedTransitionLayout,
                     animatedContentScope = this@composable

@@ -3,7 +3,6 @@ package pl.edu.uw.juwenalia.ui.artists.components
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
@@ -20,9 +19,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import juweappka.composeapp.generated.resources.Res
-import juweappka.composeapp.generated.resources.artist_photo_placeholder
-import org.jetbrains.compose.resources.imageResource
 import pl.edu.uw.juwenalia.data.model.Artist
 
 @OptIn(ExperimentalSharedTransitionApi::class)
@@ -49,7 +45,7 @@ internal fun ArtistItem(
                     Modifier
                         .sharedBounds(
                             sharedTransitionScope.rememberSharedContentState(
-                                key = "image-${artist.id}"
+                                key = "artist-image-${artist.id}"
                             ),
                             animatedVisibilityScope = animatedContentScope
                         ).padding(bottom = 8.dp)
@@ -64,7 +60,7 @@ internal fun ArtistItem(
                     Modifier
                         .sharedBounds(
                             sharedTransitionScope.rememberSharedContentState(
-                                key = "name-${artist.id}"
+                                key = "artist-name-${artist.id}"
                             ),
                             animatedVisibilityScope = animatedContentScope
                         )

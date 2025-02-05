@@ -1,10 +1,9 @@
-package pl.edu.uw.juwenalia.ui.artists
+package pl.edu.uw.juwenalia.ui.common
 
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -34,15 +33,15 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import juweappka.composeapp.generated.resources.Res
-import juweappka.composeapp.generated.resources.artists_title
 import juweappka.composeapp.generated.resources.back
 import org.jetbrains.compose.resources.stringResource
 import pl.edu.uw.juwenalia.data.model.Artist
 
 @OptIn(ExperimentalSharedTransitionApi::class, ExperimentalMaterial3Api::class)
 @Composable
-internal fun ArtistDetailScreen(
+internal fun ArtistDetail(
     artist: Artist,
+    topBarTitle: String,
     onBackClick: () -> Unit,
     sharedTransitionScope: SharedTransitionScope,
     animatedContentScope: AnimatedContentScope
@@ -50,7 +49,7 @@ internal fun ArtistDetailScreen(
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text(stringResource(Res.string.artists_title)) },
+                title = { Text(topBarTitle) },
                 navigationIcon = {
                     IconButton(
                         onClick = onBackClick
@@ -99,7 +98,7 @@ internal fun ArtistDetailScreen(
                             Modifier
                                 .sharedBounds(
                                     sharedTransitionScope.rememberSharedContentState(
-                                        key = "image-${artist.id}"
+                                        key = "artist-image-${artist.id}"
                                     ),
                                     animatedVisibilityScope = animatedContentScope
                                 ).height(200.dp)
@@ -116,14 +115,17 @@ internal fun ArtistDetailScreen(
                             Modifier
                                 .sharedBounds(
                                     sharedTransitionScope.rememberSharedContentState(
-                                        key = "name-${artist.id}"
+                                        key = "artist-name-${artist.id}"
                                     ),
                                     animatedVisibilityScope = animatedContentScope
                                 )
                     )
                 }
                 Column(
-                    modifier = Modifier.padding(horizontal = 16.dp)
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp)
                 ) {
                     Text(
                         text = artist.description,
