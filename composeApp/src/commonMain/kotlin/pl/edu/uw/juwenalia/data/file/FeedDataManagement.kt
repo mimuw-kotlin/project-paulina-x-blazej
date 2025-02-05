@@ -84,7 +84,7 @@ suspend fun downloadFeed(): Boolean {
         feedData = json.decodeFromString(feedString)
     }
 
-    // if versions differ, sync feed pictures
+    // if versions differ, sync all feed pictures
     downloadAllPictures(feedData)
     deleteRedundantPictures(feedData)
 

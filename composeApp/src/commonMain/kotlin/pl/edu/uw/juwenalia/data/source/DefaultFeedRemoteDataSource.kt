@@ -29,6 +29,7 @@ class DefaultFeedRemoteDataSource() : FeedRemoteDataSource {
                     title = news.title,
                     imageFilename = news.imageFilename,
                     content = news.content,
+                    isDarkText = news.isDarkText,
                     imageByteArray = byteArray
                 )
             }

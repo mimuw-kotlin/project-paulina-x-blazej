@@ -5,5 +5,6 @@ data class News(
     val title: String,
     val imageFilename: String,
     val content: String,
+    val isDarkText: Boolean,
     val imageByteArray: ByteArray
 )
