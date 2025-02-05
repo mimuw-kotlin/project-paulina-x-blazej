@@ -1,4 +1,4 @@
-package pl.edu.uw.juwenalia.data
+package pl.edu.uw.juwenalia.data.file
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -6,30 +6,26 @@ import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.get
+import io.ktor.http.HttpStatusCode
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
-import pl.edu.uw.juwenalia.data.file.checkFileExistence
-import pl.edu.uw.juwenalia.data.file.deleteFile
-import pl.edu.uw.juwenalia.data.file.getAppFilesDirectory
-import pl.edu.uw.juwenalia.data.file.getFileBytesByName
-import pl.edu.uw.juwenalia.data.file.getFiles
-import pl.edu.uw.juwenalia.data.file.getJsonString
-import pl.edu.uw.juwenalia.data.file.saveFile
-import pl.edu.uw.juwenalia.data.file.saveJsonFile
 import pl.edu.uw.juwenalia.data.model.Artist
 import pl.edu.uw.juwenalia.data.model.ArtistJsonData
 import pl.edu.uw.juwenalia.data.model.News
 import pl.edu.uw.juwenalia.data.model.NewsJsonData
 
-private const val FEED_SOURCE: String = "https://c00kiepreferences.github.io/JuweFeed"
-private const val HOME_FOLDER: String = "Feed"
+private const val FEED_SOURCE_URL: String = "https://c00kiepreferences.github.io/JuweFeed"
+private const val REMOTE_HOME_FOLDER: String = "Feed"
 private const val JSON_FOLDER: String = "Json"
-private const val IMAGES_FOLDER: String = "Pictures"
-private const val FEED_FILENAME: String = "sample_feed.json"
+private const val REMOTE_IMAGES_FOLDER: String = "Pictures"
+private const val FEED_FILENAME: String = "feed.json"
 private const val FEED_VERSION_FILENAME: String = "feed_version.json"
+private const val ARTIST_IMAGES_FOLDER: String = "artist_images"
+private const val NEWS_IMAGES_FOLDER: String = "news_images"
+private val json = Json { ignoreUnknownKeys = true }
 
 @Serializable
 data class FeedData(
@@ -44,65 +40,58 @@ data class FeedVersionData(
 )
 
 // Save the current feed version in a feed version file
-fun saveCurrentFeedVersion(filesDir: String) {
-    if (checkFileExistence(filesDir, "json", FEED_FILENAME)) {
-        val currentFeedString = getJsonString(filesDir, "json", FEED_FILENAME)
+fun saveCurrentFeedVersion() {
+    if (checkFileExistence(JSON_FOLDER, FEED_FILENAME)) {
+        val currentFeedString = getJsonString(JSON_FOLDER, FEED_FILENAME)
         if (currentFeedString != null) {
-            val currFeedData: FeedData = Json.decodeFromString(currentFeedString)
+            val currFeedData: FeedData = json.decodeFromString(currentFeedString)
             val currFeedVersionData = FeedVersionData(id = currFeedData.id)
             val currFeedVersionString = Json.encodeToString(currFeedVersionData)
-            saveJsonFile(filesDir, "json", FEED_VERSION_FILENAME, currFeedVersionString)
+            saveJsonFile(JSON_FOLDER, FEED_VERSION_FILENAME, currFeedVersionString)
         }
     }
 }
 
 // If previous version of feed has a different id or is not recorded, return false
 fun compareFeedVersions(
-    filesDir: String,
     currId: Int
 ): Boolean {
-    if (!checkFileExistence(filesDir, "json", FEED_VERSION_FILENAME)) return false
-    val feedVersionString = getJsonString(filesDir, "json", FEED_VERSION_FILENAME)
+    if (!checkFileExistence(JSON_FOLDER, FEED_VERSION_FILENAME)) return false
+    val feedVersionString = getJsonString(JSON_FOLDER, FEED_VERSION_FILENAME)
 
     if (feedVersionString == null) return true
-    val feedVersionData: FeedVersionData = Json.decodeFromString(feedVersionString)
+    val feedVersionData: FeedVersionData = json.decodeFromString(feedVersionString)
 
     if (feedVersionData.id == currId) return true
     return false
 }
 
 // Download feed info and return download status
-suspend fun downloadFeed(filesDir: String): Boolean {
+suspend fun downloadFeed(): Boolean {
     // before download, save current version id (if exists)
-    saveCurrentFeedVersion(filesDir)
+    saveCurrentFeedVersion()
 
-    val url = "$FEED_SOURCE/$HOME_FOLDER/$JSON_FOLDER/$FEED_FILENAME"
-    if (!downloadFile(filesDir, "json", FEED_FILENAME, url)) return false
+    val url = "$FEED_SOURCE_URL/$REMOTE_HOME_FOLDER/$JSON_FOLDER/$FEED_FILENAME"
+    if (!downloadFile(JSON_FOLDER, FEED_FILENAME, url)) return false
 
     val feedData: FeedData
-    val feedString = getJsonString(filesDir, "json", FEED_FILENAME)
+    val feedString = getJsonString(JSON_FOLDER, FEED_FILENAME)
 
     if (feedString == null) {
         return false
     } else {
-        feedData = Json.decodeFromString(feedString)
-    }
-
-    // if downloaded json id is the same as previous versions, return
-    if (compareFeedVersions(filesDir, feedData.id)) {
-        return true
+        feedData = json.decodeFromString(feedString)
     }
 
     // if versions differ, sync feed pictures
-    downloadAllPictures(filesDir, feedData)
-    deleteRedundantPictures(filesDir, feedData)
+    downloadAllPictures(feedData)
+    deleteRedundantPictures(feedData)
 
     return true
 }
 
 // Download json file describing feed
 suspend fun downloadFile(
-    filesDir: String,
     folder: String,
     fileName: String,
     url: String
@@ -117,8 +106,12 @@ suspend fun downloadFile(
             }
 
         try {
-            val fileBytes: ByteArray = client.get(url).body()
-            saveFile(filesDir, folder, fileName, fileBytes)
+            if (client.get(url).status != HttpStatusCode.OK) {
+                success = false
+            } else {
+                val fileBytes: ByteArray = client.get(url).body()
+                saveFile(folder, fileName, fileBytes)
+            }
         } catch (e: Exception) {
             println("Feed download error: ${e.message}")
             success = false
@@ -131,56 +124,59 @@ suspend fun downloadFile(
 
 // Download all pictures necessary to generate feed
 suspend fun downloadAllPictures(
-    filesDir: String,
     feedData: FeedData
 ) {
     feedData.newsData.forEach { news ->
-        val url = "$FEED_SOURCE/$HOME_FOLDER/$IMAGES_FOLDER/${news.imageFilename}"
-        downloadFile(filesDir, "artist_images", news.imageFilename, url)
+        val url = "$FEED_SOURCE_URL/$REMOTE_HOME_FOLDER/$REMOTE_IMAGES_FOLDER/${news.imageFilename}"
+        downloadFile(NEWS_IMAGES_FOLDER, news.imageFilename, url)
     }
     feedData.artistData.forEach { artist ->
-        val url = "$FEED_SOURCE/$HOME_FOLDER/$IMAGES_FOLDER/${artist.imageFilename}"
-        downloadFile(filesDir, "artist_images", artist.imageFilename, url)
+        val url = "$FEED_SOURCE_URL/$REMOTE_HOME_FOLDER/$REMOTE_IMAGES_FOLDER/${artist.imageFilename}"
+        downloadFile(ARTIST_IMAGES_FOLDER, artist.imageFilename, url)
     }
 }
 
 // Delete redundant pictures
 fun deleteRedundantPictures(
-    filesDir: String,
     feedData: FeedData
 ) {
     val neededImages: MutableSet<String> = emptySet<String>().toMutableSet()
     feedData.newsData.forEach { news -> neededImages += news.imageFilename }
     feedData.artistData.forEach { artist -> neededImages += artist.imageFilename }
-    val allImages = getFiles(filesDir, "artist_images")
+    val allArtistImages = getFiles(ARTIST_IMAGES_FOLDER)
+    val allNewsImages = getFiles(NEWS_IMAGES_FOLDER)
 
-    allImages.forEach { image ->
+    allArtistImages.forEach { image ->
         if (!neededImages.contains(image)) {
-            deleteFile(filesDir, "artist_images", image)
+            deleteFile(ARTIST_IMAGES_FOLDER, image)
+        }
+    }
+    allNewsImages.forEach { image ->
+        if (!neededImages.contains(image)) {
+            deleteFile(NEWS_IMAGES_FOLDER, image)
         }
     }
 }
 
-fun getFeedData(filesDir: String): FeedData {
-    if (!checkFileExistence(filesDir, "json", FEED_FILENAME)) {
+fun getFeedData(): FeedData {
+    if (!checkFileExistence(JSON_FOLDER, FEED_FILENAME)) {
         return FeedData()
     }
-    val feedString = getJsonString(filesDir, "json", FEED_FILENAME)
+    val feedString = getJsonString(JSON_FOLDER, FEED_FILENAME)
     return if (feedString != null) {
-        Json.decodeFromString(feedString)
+        json.decodeFromString(feedString)
     } else {
         FeedData()
     }
 }
 
 // return list of all news with loaded images, sorted by id (descending)
-fun getNews(filesDir: String): List<News> {
-    val newsJsonData = getFeedData(filesDir).newsData
+fun getNews(): List<News> {
+    val newsJsonData = getFeedData().newsData
     val newsList = emptyList<News>().toMutableList()
     newsJsonData.forEach { news ->
         val byteArray = getFileBytesByName(
-            getAppFilesDirectory(),
-            "news_images",
+            NEWS_IMAGES_FOLDER,
             news.imageFilename)
         if (byteArray != null) {
             newsList += News(
@@ -195,13 +191,12 @@ fun getNews(filesDir: String): List<News> {
 }
 
 // return list of all artists with loaded images, sorted by id (descending)
-fun getArtists(filesDir: String): List<Artist> {
-    val artistsJsonData = getFeedData(filesDir).artistData
+fun getArtists(): List<Artist> {
+    val artistsJsonData = getFeedData().artistData
     val artistsList = emptyList<Artist>().toMutableList()
     artistsJsonData.forEach { artist ->
         val byteArray = getFileBytesByName(
-            getAppFilesDirectory(),
-            "artist_images",
+            ARTIST_IMAGES_FOLDER,
             artist.imageFilename)
         if (byteArray != null) {
             artistsList += Artist(

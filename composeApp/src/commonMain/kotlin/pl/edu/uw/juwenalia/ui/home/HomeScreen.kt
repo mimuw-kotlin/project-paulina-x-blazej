@@ -41,7 +41,6 @@ import juweappka.composeapp.generated.resources.sponsor_logo_placeholder
 import juweappka.composeapp.generated.resources.sponsors_and_partners_section_header
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
-import pl.edu.uw.juwenalia.data.file.getAppFilesDirectory
 import pl.edu.uw.juwenalia.ui.common.CardWithAction
 import pl.edu.uw.juwenalia.ui.home.components.ArtistListItem
 import pl.edu.uw.juwenalia.ui.home.components.FeedSectionHeader
@@ -99,9 +98,8 @@ internal fun HomeScreen() {
                 if (homeUiState.news.isNotEmpty()) {
                     item(span = { GridItemSpan(maxLineSpan) }) {
                         NewsGridItem(
-                            title = homeUiState.news[0].title,
+                            news = homeUiState.news[0],
                             darkTextColor = false,
-                            imageBytes = homeUiState.news[0].imageByteArray,
                             imageContentDescription = "",
                             onClick = { /* TODO */ }
                         )
@@ -127,8 +125,7 @@ internal fun HomeScreen() {
                     ) {
                         items(homeUiState.artists.size) { i ->
                             ArtistListItem(
-                                name = homeUiState.artists[i].name,
-                                imageBytes = homeUiState.artists[i].imageByteArray,
+                                artist = homeUiState.artists[i],
                                 onClick = { /* TODO */ }
                             )
                         }
@@ -182,9 +179,8 @@ internal fun HomeScreen() {
 
                 items(homeUiState.news) { news ->
                     NewsGridItem(
-                        title = news.title,
+                        news = news,
                         darkTextColor = false,
-                        imageBytes = news.imageByteArray,
                         imageContentDescription = "Zapowiedź artystów",
                         onClick = { /* TODO */ }
                     )

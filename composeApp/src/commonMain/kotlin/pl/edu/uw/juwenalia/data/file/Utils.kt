@@ -20,20 +20,18 @@ sealed class Async<out T> {
 }
 
 fun getPath(
-    filesDir: String,
     folder: String,
     filename: String? = null
 ): Path =
     when (filename) {
-        null -> "$filesDir/$folder".toPath()
-        else -> "$filesDir/$folder/$filename".toPath()
+        null -> "${getAppFilesDirectory()}/$folder".toPath()
+        else -> "${getAppFilesDirectory()}/$folder/$filename".toPath()
     }
 
 fun checkPathExistence(
-    filesDir: String,
     folder: String
 ) {
-    val expectedPath = getPath(filesDir, folder)
+    val expectedPath = getPath(folder)
     val fileSystem = FileSystem.SYSTEM
     if (!fileSystem.exists(expectedPath)) {
         fileSystem.createDirectory(expectedPath)
@@ -41,11 +39,10 @@ fun checkPathExistence(
 }
 
 fun checkFileExistence(
-    filesDir: String,
     folder: String,
     fileName: String
 ): Boolean {
-    val expectedPath = getPath(filesDir, folder, fileName)
+    val expectedPath = getPath(folder, fileName)
     val fileSystem = FileSystem.SYSTEM
     return fileSystem.exists(expectedPath)
 }

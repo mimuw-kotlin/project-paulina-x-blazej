@@ -1,6 +1,5 @@
 package pl.edu.uw.juwenalia.ui.home.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
@@ -16,18 +15,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import dev.sargunv.maplibrecompose.expressions.dsl.image
-import org.jetbrains.compose.resources.DrawableResource
-import org.jetbrains.compose.resources.imageResource
-import pl.edu.uw.juwenalia.data.file.getAppFilesDirectory
-import pl.edu.uw.juwenalia.data.file.getFileBytesByName
+import pl.edu.uw.juwenalia.data.model.News
 
 @Composable
 internal fun NewsGridItem(
-    title: String,
+    news: News,
     darkTextColor: Boolean,
     imageContentDescription: String,
-    imageBytes: ByteArray,
     onClick: () -> Unit
 ) {
 
@@ -35,7 +29,7 @@ internal fun NewsGridItem(
         Modifier.clickable(onClick = onClick)
     ) {
         AsyncImage(
-            imageBytes,
+            news.imageByteArray,
             contentDescription = imageContentDescription,
             contentScale = ContentScale.Crop,
             modifier =
@@ -46,7 +40,7 @@ internal fun NewsGridItem(
         )
 
         Text(
-            text = title,
+            text = news.title,
             style = MaterialTheme.typography.titleLarge,
             color =
                 if (darkTextColor) {

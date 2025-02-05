@@ -7,12 +7,11 @@ import okio.buffer
 import okio.use
 
 suspend fun savePickedFile(
-    filesDir: String,
     folder: String,
     file: PlatformFile
 ) {
-    val filePath = getPath(filesDir, folder, file.name)
-    checkPathExistence(filesDir, folder)
+    val filePath = getPath(folder, file.name)
+    checkPathExistence(folder)
 
     val fileBytes = file.readBytes()
     FileSystem.SYSTEM.sink(filePath).buffer().use { sink ->
@@ -21,13 +20,12 @@ suspend fun savePickedFile(
 }
 
 fun saveJsonFile(
-    filesDir: String,
     folder: String,
     fileName: String,
     contents: String
 ) {
-    val filePath = getPath(filesDir, folder, fileName)
-    checkPathExistence(filesDir, folder)
+    val filePath = getPath(folder, fileName)
+    checkPathExistence(folder)
     FileSystem.SYSTEM
         .sink(filePath)
         .buffer()
@@ -35,13 +33,12 @@ fun saveJsonFile(
 }
 
 fun saveFile(
-    filesDir: String,
     folder: String,
     fileName: String,
     fileBytes: ByteArray
 ) {
-    val filePath = getPath(filesDir, folder, fileName)
-    checkPathExistence(filesDir, folder)
+    val filePath = getPath(folder, fileName)
+    checkPathExistence(folder)
 
     FileSystem.SYSTEM.sink(filePath).buffer().use { sink ->
         sink.write(fileBytes)
@@ -49,24 +46,22 @@ fun saveFile(
 }
 
 fun deleteFile(
-    filesDir: String,
     folder: String,
     fileName: String
 ) {
     val fileSystem = FileSystem.SYSTEM
-    val fileToDelete = getPath(filesDir, folder, fileName)
-    checkPathExistence(filesDir, folder)
+    val fileToDelete = getPath(folder, fileName)
+    checkPathExistence(folder)
 
     fileSystem.delete(fileToDelete)
 }
 
 fun getFileBytesByName(
-    filesDir: String,
     folder: String,
     fileName: String
 ): ByteArray? {
-    val filePath = getPath(filesDir, folder, fileName)
-    checkPathExistence(filesDir, folder)
+    val filePath = getPath(folder, fileName)
+    if (!checkFileExistence(folder, fileName)) return null
 
     return try {
         FileSystem.SYSTEM.source(filePath).buffer().use { source ->
@@ -79,12 +74,11 @@ fun getFileBytesByName(
 }
 
 fun getJsonString(
-    filesDir: String,
     folder: String,
     fileName: String
 ): String? {
-    val filePath = getPath(filesDir, folder, fileName)
-    checkPathExistence(filesDir, folder)
+    val filePath = getPath(folder, fileName)
+    checkPathExistence(folder)
 
     return try {
         FileSystem.SYSTEM
@@ -98,12 +92,11 @@ fun getJsonString(
 }
 
 fun getFiles(
-    filesDir: String,
     folder: String
 ): List<String> {
     val fileSystem = FileSystem.SYSTEM
-    val directory = getPath(filesDir, folder)
-    checkPathExistence(filesDir, folder)
+    val directory = getPath(folder)
+    checkPathExistence(folder)
 
     val files = fileSystem.list(directory)
 

@@ -33,8 +33,7 @@ import juweappka.composeapp.generated.resources.tickets_nav
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.KoinContext
-import pl.edu.uw.juwenalia.data.downloadFeed
-import pl.edu.uw.juwenalia.data.file.getAppFilesDirectory
+import pl.edu.uw.juwenalia.data.file.downloadFeed
 import pl.edu.uw.juwenalia.ui.artists.ArtistsScreen
 import pl.edu.uw.juwenalia.ui.home.HomeScreen
 import pl.edu.uw.juwenalia.ui.map.components.MapScreen
@@ -62,9 +61,8 @@ fun App(
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination?.route
 
-        val localFileDir = getAppFilesDirectory()
         LaunchedEffect(Unit) {
-            downloadFeed(localFileDir)
+            downloadFeed()
         }
 
         AppTheme(
