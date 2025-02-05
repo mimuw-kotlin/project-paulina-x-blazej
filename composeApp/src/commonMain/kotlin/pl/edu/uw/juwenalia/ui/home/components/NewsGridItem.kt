@@ -1,6 +1,5 @@
 package pl.edu.uw.juwenalia.ui.home.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
@@ -16,54 +15,32 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import org.jetbrains.compose.resources.DrawableResource
-import org.jetbrains.compose.resources.imageResource
-import pl.edu.uw.juwenalia.data.file.getFileBytesByName
+import pl.edu.uw.juwenalia.data.model.News
 
 @Composable
 internal fun NewsGridItem(
-    title: String,
+    news: News,
     darkTextColor: Boolean,
     imageContentDescription: String,
-    image: DrawableResource? = null,
-    filesDir: String? = null,
-    fileName: String? = null,
     onClick: () -> Unit
 ) {
-    var fileBytes: ByteArray? = null
-    if (filesDir != null && fileName != null) {
-        fileBytes = getFileBytesByName(filesDir, "artist_images", fileName)
-    }
 
     Box(
         Modifier.clickable(onClick = onClick)
     ) {
-        if (fileBytes != null) {
-            AsyncImage(
-                fileBytes,
-                contentDescription = imageContentDescription,
-                contentScale = ContentScale.Crop,
-                modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .aspectRatio(1.77f) // 16:9 aspect ratio
-                        .clip(shape = RoundedCornerShape(12.dp))
-            )
-        } else if (image != null) {
-            Image(
-                bitmap = imageResource(image),
-                contentDescription = imageContentDescription,
-                modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .aspectRatio(1.77f) // 16:9 aspect ratio
-                        .clip(shape = RoundedCornerShape(12.dp)),
-                contentScale = ContentScale.Crop
-            )
-        }
+        AsyncImage(
+            news.imageByteArray,
+            contentDescription = imageContentDescription,
+            contentScale = ContentScale.Crop,
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(1.77f) // 16:9 aspect ratio
+                    .clip(shape = RoundedCornerShape(12.dp))
+        )
 
         Text(
-            text = title,
+            text = news.title,
             style = MaterialTheme.typography.titleLarge,
             color =
                 if (darkTextColor) {

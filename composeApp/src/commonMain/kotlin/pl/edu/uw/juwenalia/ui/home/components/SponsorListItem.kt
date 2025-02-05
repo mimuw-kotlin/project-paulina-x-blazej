@@ -18,13 +18,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.imageResource
+import pl.edu.uw.juwenalia.data.model.Sponsor
 
 @Composable
 internal fun SponsorListItem(
-    name: String,
-    image: DrawableResource,
+    sponsor: Sponsor,
     onClick: () -> Unit
 ) {
     Column(
@@ -39,19 +40,19 @@ internal fun SponsorListItem(
                     .clip(shape = RoundedCornerShape(12.dp))
                     .background(color = MaterialTheme.colorScheme.surfaceContainer)
         ) {
-            Image(
-                bitmap = imageResource(image),
-                contentDescription = name,
+            AsyncImage(
+                sponsor.imageByteArray,
+                contentDescription = sponsor.name,
+                contentScale = ContentScale.Fit,
                 modifier =
                     Modifier
                         .padding(8.dp)
                         .fillMaxWidth()
                         .aspectRatio(1f),
-                contentScale = ContentScale.Fit
             )
         }
         Text(
-            text = name,
+            text = sponsor.name,
             style = MaterialTheme.typography.titleSmall
         )
     }

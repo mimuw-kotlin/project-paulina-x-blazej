@@ -17,36 +17,31 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import pl.edu.uw.juwenalia.data.file.getFileBytesByName
+import pl.edu.uw.juwenalia.data.model.Artist
 
 @Composable
 internal fun ArtistListItem(
-    name: String,
-    filesDir: String,
-    fileName: String,
+    artist: Artist,
     onClick: () -> Unit
 ) {
-    val fileBytes = getFileBytesByName(filesDir, "artist_images", fileName)
 
     Column(
         modifier = Modifier.width(128.dp).wrapContentHeight().clickable(onClick = onClick),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        if (fileBytes != null) {
-            AsyncImage(
-                fileBytes,
-                contentDescription = name,
-                contentScale = ContentScale.Crop,
-                modifier =
-                    Modifier
-                        .padding(bottom = 8.dp)
-                        .fillMaxWidth()
-                        .aspectRatio(1.0f)
-                        .clip(shape = CircleShape)
-            )
-        }
+        AsyncImage(
+            artist.imageByteArray,
+            contentDescription =artist.name,
+            contentScale = ContentScale.Crop,
+            modifier =
+                Modifier
+                    .padding(bottom = 8.dp)
+                    .fillMaxWidth()
+                    .aspectRatio(1.0f)
+                    .clip(shape = CircleShape)
+        )
         Text(
-            text = name,
+            text = artist.name,
             style = MaterialTheme.typography.titleSmall
         )
     }
