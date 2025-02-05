@@ -27,6 +27,7 @@ class DefaultFeedRemoteDataSource() : FeedRemoteDataSource {
                     id = news.id,
                     title = news.title,
                     imageFilename = news.imageFilename,
+                    content = news.content,
                     imageByteArray = byteArray
                 )
             }
@@ -46,6 +47,7 @@ class DefaultFeedRemoteDataSource() : FeedRemoteDataSource {
                     id = artist.id,
                     name = artist.name,
                     imageFilename = artist.imageFilename,
+                    description = artist.description,
                     imageByteArray = byteArray
                 )
             }

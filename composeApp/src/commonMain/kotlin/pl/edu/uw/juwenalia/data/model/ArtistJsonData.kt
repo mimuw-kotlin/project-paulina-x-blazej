@@ -6,6 +6,7 @@ import kotlinx.serialization.Serializable
 data class ArtistJsonData(
     val id: Int = 0,
     val name: String = "",
-    val imageFilename: String = ""
+    val imageFilename: String = "",
+    val description: String = ""
 )
 

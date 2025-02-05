@@ -4,5 +4,6 @@ data class News(
     val id: Int,
     val title: String,
     val imageFilename: String,
+    val content: String,
     val imageByteArray: ByteArray
 )

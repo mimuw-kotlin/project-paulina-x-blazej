@@ -13,6 +13,7 @@ class ArtistsViewModel : ViewModel() {
                 id = it,
                 name = "Dawid Podsiadło $it",
                 imageFilename = "dawid.jpg",
+                description = "",
                 imageByteArray = ByteArray(0)
             )
         }

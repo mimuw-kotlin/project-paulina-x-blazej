@@ -6,5 +6,6 @@ import kotlinx.serialization.Serializable
 data class NewsJsonData(
     val id: Int = 0,
     val title: String = "",
+    val content: String = "",
     val imageFilename: String = ""
 )
