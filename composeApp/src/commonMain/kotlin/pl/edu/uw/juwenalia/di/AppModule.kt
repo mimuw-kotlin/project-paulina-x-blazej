@@ -9,6 +9,7 @@ import pl.edu.uw.juwenalia.data.repository.DefaultMapPointRepository
 import pl.edu.uw.juwenalia.data.repository.DefaultTicketRepository
 import pl.edu.uw.juwenalia.data.repository.MapPointRepository
 import pl.edu.uw.juwenalia.data.repository.TicketRepository
+import pl.edu.uw.juwenalia.ui.artists.ArtistsViewModel
 import pl.edu.uw.juwenalia.ui.map.MapViewModel
 import pl.edu.uw.juwenalia.ui.tickets.TicketsViewModel
 
@@ -22,6 +23,7 @@ val appModule =
         singleOf(::DefaultTicketRepository) { bind<TicketRepository>() }
 
         // View models
+        viewModelOf(::ArtistsViewModel)
         viewModelOf(::MapViewModel)
         viewModelOf(::TicketsViewModel)
     }

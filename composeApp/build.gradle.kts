@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    id("kotlin-parcelize")
     kotlin("plugin.serialization") version "2.1.0"
 }
 
@@ -52,9 +53,10 @@ kotlin {
             implementation(libs.jetbrains.adaptive.layout)
             implementation(libs.jetbrains.adaptive.navigation)
 
-            // Lifecycle
+            // AndroidX
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
+            implementation(libs.androidx.animation.android)
 
             // Navigation
             implementation(libs.navigation.compose)
