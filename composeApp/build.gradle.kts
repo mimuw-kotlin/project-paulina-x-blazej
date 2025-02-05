@@ -36,8 +36,8 @@ kotlin {
             implementation(libs.koin.android)
             implementation(libs.koin.androidx.compose)
         }
-        commonMain.dependencies {
 
+        commonMain.dependencies {
             // Compose multiplatform
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -86,8 +86,12 @@ kotlin {
             implementation(libs.ktor.client.logging)
             implementation(libs.ktor.client.cio)
         }
+
         commonTest.dependencies {
-            implementation(libs.kotlin.test)
+            implementation(kotlin("test"))
+
+            @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
+            implementation(compose.uiTest)
         }
     }
 }
@@ -126,8 +130,4 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-}
-dependencies {
-    testImplementation(libs.junit.jupiter)
-    testImplementation(libs.junit.jupiter)
 }
