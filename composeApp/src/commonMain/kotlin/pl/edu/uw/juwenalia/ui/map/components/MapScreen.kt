@@ -51,8 +51,9 @@ import kotlin.time.Duration.Companion.seconds
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun MapScreen() {
-    val mapViewModel = koinViewModel<MapViewModel>()
+internal fun MapScreen(
+    mapViewModel: MapViewModel = koinViewModel<MapViewModel>()
+) {
     val mapUiState by mapViewModel.uiState.collectAsState()
 
     val density = LocalDensity.current

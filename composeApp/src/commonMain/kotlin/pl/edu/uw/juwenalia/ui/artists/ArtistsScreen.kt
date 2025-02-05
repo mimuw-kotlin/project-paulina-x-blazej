@@ -31,8 +31,8 @@ data class DetailDestination(
 internal fun ArtistsScreen(
     navController: NavHostController = rememberNavController(),
     startDestination: Any = ListDestination
+    artistsViewModel: ArtistsViewModel = koinViewModel<ArtistsViewModel>()
 ) {
-    val artistsViewModel = koinViewModel<ArtistsViewModel>()
     val artists by artistsViewModel.artists.collectAsState()
 
     SharedTransitionLayout {
