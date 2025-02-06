@@ -21,7 +21,7 @@ class TestTicketRepository : TicketRepository {
 
     override suspend fun saveTicket(file: PlatformFile?) {
         val filename = "ticket.png"
-        val fileBytes = byteArrayOf(1, 2, 3)
+        val fileBytes = ByteArray(0)
         ticketStorage[filename] = fileBytes
         _tickets.value = ticketStorage.keys.toList()
     }

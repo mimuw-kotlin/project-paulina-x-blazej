@@ -70,7 +70,7 @@ internal fun ArtistDetail(
                     .fillMaxSize()
                     .consumeWindowInsets(innerPadding)
                     .padding(innerPadding)
-                    .testTag("artistDetail-${artist.id}")
+                    .testTag("artist_detail_${artist.id}")
         ) {
             AsyncImage(
                 artist.imageByteArray,

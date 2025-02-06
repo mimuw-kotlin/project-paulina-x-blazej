@@ -36,6 +36,7 @@ internal fun ArtistItem(
                 .width(128.dp)
                 .wrapContentHeight()
                 .clickable(onClick = onClick)
+                .testTag("artist_item_${artist.id}")
     ) {
         with(sharedTransitionScope) {
             AsyncImage(
