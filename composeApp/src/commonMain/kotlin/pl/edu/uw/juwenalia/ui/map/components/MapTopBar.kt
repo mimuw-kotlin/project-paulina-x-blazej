@@ -19,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import pl.edu.uw.juwenalia.data.model.MapPoint
 import pl.edu.uw.juwenalia.data.model.MapPointCategory
@@ -56,7 +57,8 @@ fun MapTopBar(
             modifier =
                 Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = animatedPadding),
+                    .padding(horizontal = animatedPadding)
+                    .testTag("map_search_bar"),
             colors =
                 SearchBarDefaults.colors(
                     containerColor = MaterialTheme.colorScheme.surfaceBright
@@ -69,7 +71,9 @@ fun MapTopBar(
                     item {
                         ListItem(
                             modifier =
-                                Modifier.clickable { onSearchResultClick(mapPoint) },
+                                Modifier
+                                    .clickable { onSearchResultClick(mapPoint) }
+                                    .testTag("map_search_result"),
                             colors =
                                 ListItemDefaults.colors(
                                     containerColor = MaterialTheme.colorScheme.surfaceBright

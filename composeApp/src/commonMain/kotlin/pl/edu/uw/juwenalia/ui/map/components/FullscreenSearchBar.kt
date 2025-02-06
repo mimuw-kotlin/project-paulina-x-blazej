@@ -14,6 +14,7 @@ import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import juweappka.composeapp.generated.resources.Res
 import juweappka.composeapp.generated.resources.clear
 import juweappka.composeapp.generated.resources.search
@@ -63,7 +64,8 @@ fun FullscreenSearchBar(
                             )
                         }
                     }
-                }
+                },
+                modifier = Modifier.testTag("map_search_input")
             )
         },
         expanded = expanded,

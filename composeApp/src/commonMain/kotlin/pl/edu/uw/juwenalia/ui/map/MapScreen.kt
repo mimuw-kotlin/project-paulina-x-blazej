@@ -28,6 +28,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import dev.sargunv.maplibrecompose.compose.rememberCameraState
 import dev.sargunv.maplibrecompose.compose.rememberStyleState
@@ -52,9 +53,7 @@ import kotlin.time.Duration.Companion.seconds
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun MapScreen(
-    mapViewModel: MapViewModel = koinViewModel<MapViewModel>()
-) {
+internal fun MapScreen(mapViewModel: MapViewModel = koinViewModel<MapViewModel>()) {
     val mapUiState by mapViewModel.uiState.collectAsState()
 
     val density = LocalDensity.current
@@ -112,7 +111,12 @@ internal fun MapScreen(
                 {
                     MapPointDetails(
                         mapPoint = mapUiState.selectedMapPoint!!,
-                        modifier = Modifier.fillMaxWidth().padding(16.dp)
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(
+                                    16.dp
+                                ).testTag("map_point_details")
                     )
                 }
             },
