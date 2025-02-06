@@ -7,18 +7,6 @@ import okio.SYSTEM
 
 expect fun getAppFilesDirectory(): String
 
-sealed class Async<out T> {
-    object Loading : Async<Nothing>()
-
-    data class Error(
-        val errorMessage: Int
-    ) : Async<Nothing>()
-
-    data class Success<out T>(
-        val data: T
-    ) : Async<T>()
-}
-
 fun getPath(
     folder: String,
     filename: String? = null
@@ -28,9 +16,7 @@ fun getPath(
         else -> "${getAppFilesDirectory()}/$folder/$filename".toPath()
     }
 
-fun checkPathExistence(
-    folder: String
-) {
+fun checkPathExistence(folder: String) {
     val expectedPath = getPath(folder)
     val fileSystem = FileSystem.SYSTEM
     if (!fileSystem.exists(expectedPath)) {

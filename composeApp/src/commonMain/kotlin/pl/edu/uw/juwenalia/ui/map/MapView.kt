@@ -46,7 +46,6 @@ fun MapView(
         cameraState = cameraState,
         styleState = styleState,
         ornamentSettings = OrnamentSettings.AllDisabled,
-        // TODO: hide API key
         styleUri =
             "https://api.protomaps.com/styles/v4/$variant/pl.json?key=33e26ffe14599bf8"
     ) {

@@ -6,7 +6,6 @@ import pl.edu.uw.juwenalia.ui.App
 import platform.UIKit.UIScreen
 import platform.UIKit.UIUserInterfaceStyle
 
-@Suppress("ktlint:standard:function-naming")
 fun MainViewController() =
     ComposeUIViewController(
         configure = {
