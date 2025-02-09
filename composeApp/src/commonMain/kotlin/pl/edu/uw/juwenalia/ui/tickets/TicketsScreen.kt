@@ -2,9 +2,12 @@ package pl.edu.uw.juwenalia.ui.tickets
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
@@ -68,17 +71,22 @@ internal fun TicketsScreen(ticketsViewModel: TicketsViewModel = koinViewModel<Ti
             }
         )
 
-    Scaffold(topBar = {
-        CenterAlignedTopAppBar(
-            title = { Text(text = stringResource(Res.string.tickets_title)) }
-        )
-    }, floatingActionButton = {
-        ExtendedFloatingActionButton(
-            onClick = { ticketFilePicker.launch() },
-            icon = { Icon(Icons.Filled.Upload, stringResource(Res.string.upload_ticket)) },
-            text = { Text(text = stringResource(Res.string.upload_ticket)) }
-        )
-    }) { innerPadding ->
+    Scaffold(
+        contentWindowInsets = WindowInsets.safeDrawing,
+        topBar = {
+            CenterAlignedTopAppBar(
+                title = { Text(text = stringResource(Res.string.tickets_title)) }
+            )
+        },
+        floatingActionButton = {
+            ExtendedFloatingActionButton(
+                modifier = Modifier.safeDrawingPadding(),
+                onClick = { ticketFilePicker.launch() },
+                icon = { Icon(Icons.Filled.Upload, stringResource(Res.string.upload_ticket)) },
+                text = { Text(text = stringResource(Res.string.upload_ticket)) }
+            )
+        }
+    ) { innerPadding ->
         LazyVerticalGrid(
             columns = GridCells.Adaptive(minSize = 180.dp),
             contentPadding =
@@ -89,7 +97,10 @@ internal fun TicketsScreen(ticketsViewModel: TicketsViewModel = koinViewModel<Ti
                 },
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier.consumeWindowInsets(innerPadding).padding(innerPadding)
+            modifier =
+                Modifier
+                    .padding(innerPadding)
+                    .consumeWindowInsets(innerPadding)
         ) {
             item(span = { GridItemSpan(maxLineSpan) }) {
                 CardWithAction(

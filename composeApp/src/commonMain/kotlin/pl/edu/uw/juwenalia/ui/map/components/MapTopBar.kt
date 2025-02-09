@@ -35,6 +35,7 @@ fun MapTopBar(
     onSearchLeadingButtonClick: () -> Unit,
     searchResults: List<MapPoint>,
     onSearchResultClick: (MapPoint) -> Unit,
+    filtersVisible: Boolean,
     selectedFilters: Set<MapPointCategory>,
     onFilterClick: (MapPointCategory) -> Unit,
     modifier: Modifier = Modifier
@@ -98,6 +99,7 @@ fun MapTopBar(
         }
 
         FilterChipRow(
+            visible = filtersVisible,
             modifier =
                 Modifier
                     .fillMaxWidth()

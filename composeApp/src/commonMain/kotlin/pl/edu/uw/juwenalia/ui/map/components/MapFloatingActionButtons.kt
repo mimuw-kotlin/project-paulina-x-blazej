@@ -1,8 +1,10 @@
 package pl.edu.uw.juwenalia.ui.map.components
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.icons.Icons
@@ -16,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import dev.sargunv.maplibrecompose.compose.CameraState
 import dev.sargunv.maplibrecompose.material3.controls.DisappearingCompassButton
@@ -25,8 +28,6 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun MapFloatingActionButtons(
-    enterTransition: EnterTransition,
-    exitTransition: ExitTransition,
     cameraState: CameraState,
     fixGpsButtonIcon: @Composable () -> Unit,
     onFixGpsClick: () -> Unit,
@@ -35,11 +36,13 @@ fun MapFloatingActionButtons(
     modifier: Modifier = Modifier,
     visible: Boolean = true
 ) {
+    val density = LocalDensity.current
+
     AnimatedVisibility(
         modifier = modifier,
         visible = visible,
-        enter = enterTransition,
-        exit = exitTransition
+        enter = fadeIn() + slideInVertically { with(density) { 112.dp.roundToPx() } },
+        exit = fadeOut() + slideOutVertically { with(density) { 112.dp.roundToPx() } }
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(16.dp),

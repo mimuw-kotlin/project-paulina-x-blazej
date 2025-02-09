@@ -1,13 +1,10 @@
 package pl.edu.uw.juwenalia.ui.map
 
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.GpsFixed
@@ -27,7 +24,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import dev.sargunv.maplibrecompose.compose.rememberCameraState
@@ -55,8 +51,6 @@ import kotlin.time.Duration.Companion.seconds
 @Composable
 internal fun MapScreen(mapViewModel: MapViewModel = koinViewModel<MapViewModel>()) {
     val mapUiState by mapViewModel.uiState.collectAsState()
-
-    val density = LocalDensity.current
     val coroutineScope = rememberCoroutineScope()
 
     val cameraState =
@@ -144,18 +138,21 @@ internal fun MapScreen(mapViewModel: MapViewModel = koinViewModel<MapViewModel>(
                 gpsPosition = mapUiState.userPosition
             )
 
-            AttributionButton(styleState, modifier = Modifier.align(Alignment.BottomStart))
+            AttributionButton(
+                styleState,
+                modifier =
+                    Modifier
+                        .safeDrawingPadding()
+                        .align(Alignment.BottomStart)
+            )
 
             MapFloatingActionButtons(
                 modifier =
                     Modifier
+                        .safeDrawingPadding()
                         .align(Alignment.BottomEnd)
                         .padding(16.dp),
                 visible = !mapUiState.isSearchExpanded,
-                enterTransition =
-                    fadeIn() + slideInVertically { with(density) { 112.dp.roundToPx() } },
-                exitTransition =
-                    fadeOut() + slideOutVertically { with(density) { 112.dp.roundToPx() } },
                 cameraState = cameraState,
                 fixGpsButtonIcon = {
                     when (mapUiState.gpsState) {
@@ -221,6 +218,7 @@ internal fun MapScreen(mapViewModel: MapViewModel = koinViewModel<MapViewModel>(
             MapTopBar(
                 modifier =
                     Modifier
+                        .safeDrawingPadding()
                         .align(Alignment.TopCenter)
                         .fillMaxWidth()
                         .wrapContentHeight(),
@@ -232,6 +230,7 @@ internal fun MapScreen(mapViewModel: MapViewModel = koinViewModel<MapViewModel>(
                 onSearchLeadingButtonClick = { mapViewModel.toggleSearchBar() },
                 searchResults = mapUiState.searchResults,
                 onSearchResultClick = { mapViewModel.selectSearchQuery(it) },
+                filtersVisible = !mapUiState.isSearchExpanded,
                 selectedFilters = mapUiState.selectedFilters,
                 onFilterClick = { mapViewModel.toggleFilter(it) }
             )

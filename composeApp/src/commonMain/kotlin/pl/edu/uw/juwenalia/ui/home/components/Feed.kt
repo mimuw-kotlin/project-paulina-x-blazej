@@ -6,9 +6,12 @@ import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
@@ -69,13 +72,16 @@ internal fun Feed(
             16.dp.roundToPx()
         }
 
-    Scaffold(topBar = {
-        CenterAlignedTopAppBar(title = { Text(stringResource(Res.string.app_name)) })
-    }) { innerPadding ->
+    Scaffold(
+        contentWindowInsets = WindowInsets.safeDrawing,
+        topBar = {
+            CenterAlignedTopAppBar(title = { Text(stringResource(Res.string.app_name)) })
+        }
+    ) { innerPadding ->
         PullToRefreshBox(
             isRefreshing = isLoading,
             onRefresh = onRefresh,
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier.padding(innerPadding).consumeWindowInsets(innerPadding)
         ) {
             LazyVerticalGrid(
                 columns = GridCells.Adaptive(minSize = 200.dp),
