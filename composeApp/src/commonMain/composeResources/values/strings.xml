@@ -1,0 +1,59 @@
+<resources>
+    <string name="app_name">JuweAppka</string>
+
+    <!-- General -->
+    <string name="search">Wyszukaj</string>
+    <string name="clear">Wyczyść</string>
+    <string name="delete">Usuń</string>
+    <string name="filter">Filtr</string>
+    <string name="selected">Zaznaczono</string>
+    <string name="back">Cofnij</string>
+
+    <!-- Navigation bar -->
+    <string name="home_nav">Główna</string>
+    <string name="artists_nav">Artyści</string>
+    <string name="map_nav">Mapa</string>
+    <string name="tickets_nav">Bilety</string>
+
+    <!-- Home screen -->
+    <string name="news_section_header">Aktualności</string>
+    <string name="artists_section_header">Artyści</string>
+    <string name="sponsors_and_partners_section_header">Sponsorzy i partnerzy</string>
+    <string name="main_card_title">jUWenalia nadchodzą!</string>
+    <string name="main_card_subtitle">Widzimy się już 9 i 10 maja!</string>
+    <string name="main_card_body">Najgłośniejszy studencki festiwal w Warszawie powraca w 2025 roku! Bilety już dostępne – kup teraz i zaoszczędź nawet do 50%.</string>
+    <string name="main_card_button">Zgarnij bilety</string>
+    <string name="social_media_card_title">Przecieki?</string>
+    <string name="social_media_card_body">Wyłącznie w naszych social mediach! Zaobserwuj nas i bądź na bieżąco ze wszystkimi ogłoszeniami.</string>
+    <string name="social_media_facebook">Facebook</string>
+    <string name="social_media_instagram">Instagram</string>
+
+    <!-- Artists screen -->
+    <string name="artists_title">Artyści</string>
+    <string name="friday">Piątek</string>
+    <string name="saturday">Sobota</string>
+    <string name="may_9">9 maja</string>
+    <string name="may_10">10 maja</string>
+
+    <!-- Map screen -->
+    <string name="festival_place">Teren festiwalu</string>
+    <string name="fix_gps">Ustal pozycję GPS</string>
+    <string name="food">Jedzenie</string>
+    <string name="wc">Toalety</string>
+    <string name="beer">Piwo</string>
+    <string name="water">Woda</string>
+    <string name="exhibitors">Wystawcy</string>
+
+    <!-- Tickets screen -->
+    <string name="tickets_title">Bilety</string>
+    <string name="upload_ticket">Wgraj bilet</string>
+    <string name="buy_tickets_card_title">Pierwsza pula biletów</string>
+    <string name="buy_tickets_card_subtitle">Już dostępna!</string>
+    <string name="buy_tickets_card_body">Nie zwlekaj – liczba biletów w puli jest limitowana, a ceny będą wzrastać.</string>
+    <string name="buy_tickets_card_button">Kup teraz</string>
+    <string name="your_tickets">Twoje bilety</string>
+    <string name="no_tickets">Nie masz żadnych biletów</string>
+    <string name="no_tickets_desc">Dodaj swoje bilety do aplikacji i miej je zawsze pod ręką</string>
+    <string name="ticket_item_title">Bilet</string>
+    <string name="ticket_image_content_desc">Bilet</string>
+</resources>
